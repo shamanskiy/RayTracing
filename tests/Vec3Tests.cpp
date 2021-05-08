@@ -214,3 +214,23 @@ SCENARIO("Vector arithmetic", "[Vec3]")
         }
     }
 }
+
+SCENARIO("Vector linear interpolation", "[Vec3]")
+{
+    GIVEN("Two vectors ") {
+        Vec3 vecA(1.0, 0.0, 0.0);
+        Vec3 vecB(0.0, 1.0, 0.0);
+
+        WHEN("")
+            THEN("we can blend them equally")
+            REQUIRE(lerp(vecA,vecB, 0.5) == Vec3(0.5, 0.5, 0.0));
+
+        WHEN("")
+            THEN("we can lerp to the first one")
+            REQUIRE(lerp(vecA, vecB, 0.0) == Vec3(1.0, 0.0, 0.0));
+
+        WHEN("")
+            THEN("we can lerp to the last one")
+            REQUIRE(lerp(vecA, vecB, 1.0) == Vec3(0.0, 1.0, 0.0));
+    }
+}

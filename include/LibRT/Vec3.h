@@ -134,12 +134,19 @@ inline Vec3 operator/(const Vec3& lhs, float rhs)
 	return Vec3(lhs[0] / rhs, lhs[1] / rhs, lhs[2] / rhs);
 }
 
-inline float dot(const Vec3& lhs, const Vec3& rhs) {
+inline float dot(const Vec3& lhs, const Vec3& rhs)
+{
 	return lhs.x() * rhs.x() + lhs.y() * rhs.y() + lhs.z() * rhs.z();
 }
 
-inline Vec3 cross(const Vec3& lhs, const Vec3& rhs) {
+inline Vec3 cross(const Vec3& lhs, const Vec3& rhs) 
+{
 	return Vec3(lhs.y() * rhs.z() - lhs.z() * rhs.y(),
 		-lhs.x() * rhs.z() + lhs.z() * rhs.x(),
 		lhs.x() * rhs.y() - lhs.y() * rhs.x());
+}
+
+inline Vec3 lerp(const Vec3& vecA, const Vec3& vecB, float t)
+{
+	return (1 - t) * vecA + t * vecB;
 }
