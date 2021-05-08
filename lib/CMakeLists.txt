@@ -1,4 +1,5 @@
 set(HEADERS_LIST
+  ${PROJECT_SOURCE_DIR}/lib/Ray.h
   ${PROJECT_SOURCE_DIR}/lib/Vec3.h
 )
 

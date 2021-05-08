@@ -1,15 +1,16 @@
 #include <fstream>
+#include <iostream>
 
-#include <Vec3.h>
+#include "Ray.h"
 
 using namespace std;
 
 int main() {
 
-    Vec3 vec;
-
     int nx = 200;
     int ny = 100;
+    Ray ray;
+    Vec3 vec;
 
     ofstream imageFile;
     imageFile.open("02_gradient_vec.ppm");
