@@ -1,18 +1,10 @@
 #include <sstream>
 
-#include "catch.hpp"
-
+#include "catch_utils.hpp"
 #include "Vec3.h"
 
 using namespace std;
 using namespace Catch::literals;
-
-bool operator==(const Vec3& lhs, const Vec3& rhs)
-{
-    return Approx(lhs.x()) == rhs.x() &&
-        Approx(lhs.y()) == rhs.y() &&
-        Approx(lhs.z()) == rhs.z();
-}
 
 SCENARIO("Inspecting a vector", "[Vec3]")
 {
@@ -220,5 +212,25 @@ SCENARIO("Vector arithmetic", "[Vec3]")
             THEN("we can divide the vector by the scalar")
                 REQUIRE(result == Vec3(0.5, 1.0, 1.5));
         }
+    }
+}
+
+SCENARIO("Vector linear interpolation", "[Vec3]")
+{
+    GIVEN("Two vectors ") {
+        Vec3 vecA(1.0, 0.0, 0.0);
+        Vec3 vecB(0.0, 1.0, 0.0);
+
+        WHEN("")
+            THEN("we can blend them equally")
+            REQUIRE(lerp(vecA,vecB, 0.5) == Vec3(0.5, 0.5, 0.0));
+
+        WHEN("")
+            THEN("we can lerp to the first one")
+            REQUIRE(lerp(vecA, vecB, 0.0) == Vec3(1.0, 0.0, 0.0));
+
+        WHEN("")
+            THEN("we can lerp to the last one")
+            REQUIRE(lerp(vecA, vecB, 1.0) == Vec3(0.0, 1.0, 0.0));
     }
 }
