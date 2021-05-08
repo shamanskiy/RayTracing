@@ -1,1 +1,4 @@
 add_executable(01_gradient 01_gradient.cpp)
+
+add_executable(02_gradient_vec 02_gradient_vec.cpp)
+target_link_libraries(02_gradient_vec PRIVATE LibRT)

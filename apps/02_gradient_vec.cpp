@@ -1,14 +1,18 @@
 #include <fstream>
 
+#include <Vec3.h>
+
 using namespace std;
 
 int main() {
+
+    Vec3 vec;
 
     int nx = 200;
     int ny = 100;
 
     ofstream imageFile;
-    imageFile.open("01_gradient.ppm");
+    imageFile.open("02_gradient_vec.ppm");
 
     imageFile << "P3\n" << nx << " " << ny << "\n255\n";
 
