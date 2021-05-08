@@ -8,6 +8,10 @@ project(RayTracing
 set(CMAKE_CXX_EXTENSIONS OFF)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+find_package(GTest CONFIG REQUIRED)
+
 add_subdirectory(apps)
 
 add_subdirectory(lib)
+
+add_subdirectory(tests)
