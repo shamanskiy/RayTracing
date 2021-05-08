@@ -1,256 +1,224 @@
 #include <sstream>
 
-#include "gtest/gtest.h"
+#include "catch.hpp"
 
 #include "Vec3.h"
 
 using namespace std;
-TEST(Vec3Test, vec000_len0)
+using namespace Catch::literals;
+
+bool operator==(const Vec3& lhs, const Vec3& rhs)
 {
-    Vec3 vec;
-    ASSERT_FLOAT_EQ(vec.length(), 0.0f);
+    return Approx(lhs.x()) == rhs.x() &&
+        Approx(lhs.y()) == rhs.y() &&
+        Approx(lhs.z()) == rhs.z();
 }
 
-TEST(Vec3Test, vec340_len5)
+SCENARIO("Inspecting a vector", "[Vec3]")
 {
-    Vec3 vec(3.0f, 4.0f, 0.0f);
-    ASSERT_FLOAT_EQ(vec.length(), 5.0f);
+    GIVEN("A vector ") {
+        Vec3 vec(3.0, 4.0, 0.0);
+
+        WHEN("") {
+            ostringstream stream;
+            stream << vec;
+            THEN("we can pass it to an output stream")      
+                REQUIRE(stream.str() == "3 4 0");
+        }
+
+        WHEN("")
+            THEN("we can access its elements as xyz") {
+                REQUIRE(vec.x() == 3.0_a);
+                REQUIRE(vec.y() == 4.0_a);
+                REQUIRE(vec.z() == 0.0_a);
+            }
+
+        WHEN("")
+            THEN("we can access its elements as rgb") {
+                REQUIRE(vec.r() == 3.0_a);
+                REQUIRE(vec.g() == 4.0_a);
+                REQUIRE(vec.b() == 0.0_a);
+            }
+
+        WHEN("") {
+            vec[0] = 1.0;
+            vec[1] = 1.0;
+            vec[2] = 1.0;
+            THEN("we can access and modify its elements with brackets") {
+                REQUIRE(vec[0] == 1.0_a);
+                REQUIRE(vec[1] == 1.0_a);
+                REQUIRE(vec[2] == 1.0_a);
+            }
+        }
+    }
 }
 
-TEST(Vec3Test, vec340_sqlen25)
+SCENARIO("Default vector", "[Vec3]")
 {
-    Vec3 vec(3.0f, 4.0f, 0.0f);
-    ASSERT_FLOAT_EQ(vec.length_sq(), 25.0f);
+    GIVEN("A default vector ") {
+        Vec3 vec;
+
+        WHEN("")
+            THEN("it has zero elements")
+                REQUIRE(vec == Vec3(0.0, 0.0, 0.0));
+    }
 }
 
-TEST(Vec3Test, vec_xyz)
+SCENARIO("Vector length operations", "[Vec3]")
 {
-    Vec3 vec(3.0f, 4.0f, 0.0f);
+    GIVEN("A vector ") {
+        Vec3 vec(3.0, 4.0, 0.0);
 
-    ASSERT_FLOAT_EQ(vec.x(), 3.0f);
-    ASSERT_FLOAT_EQ(vec.y(), 4.0f);
-    ASSERT_FLOAT_EQ(vec.z(), 0.0f);
+        WHEN("") 
+            THEN("we can compute its length")
+                REQUIRE(vec.length() == 5.0_a);
+
+        WHEN("") 
+            THEN("we can compute its squared length")
+                REQUIRE(vec.length_sq() == 25.0_a);
+  
+        WHEN("we normalize it")
+        {
+            Vec3 unit_vec = vec.normalize();
+            THEN("we get a new unit vector")
+            {
+                REQUIRE(vec.length() == 5.0_a);
+                REQUIRE(unit_vec.length() == 1.0_a);
+            }
+        }
+
+        WHEN("we normalize it in place")
+        {
+            vec.normalize_inplace();
+            THEN("its length becomes 1")
+                REQUIRE(vec.length() == 1.0_a);
+        }
+
+        WHEN("we negate it") {
+            Vec3 vec_neg = -vec;
+            THEN("we get a vector with negated components")
+                REQUIRE(vec_neg == Vec3(-3.0, -4.0, 0.0));
+        }   
+    }
 }
 
-TEST(Vec3Test, vec_rgb)
+SCENARIO("Vector arithmetic in-place", "[Vec3]")
 {
-    Vec3 vec(3.0f, 4.0f, 0.0f);
+    GIVEN("Two vectors ") {
+        Vec3 vecA(1.0, 2.0, 3.0);
+        Vec3 vecB(2.0, 2.0, 2.0);
 
-    ASSERT_FLOAT_EQ(vec.r(), 3.0f);
-    ASSERT_FLOAT_EQ(vec.g(), 4.0f);
-    ASSERT_FLOAT_EQ(vec.b(), 0.0f);
+        WHEN("we add one to another in place") {
+            vecA += vecB;
+            THEN("the first one changes")
+                REQUIRE(vecA == Vec3(3.0, 4.0, 5.0));
+        }
+
+        WHEN("we subtract one from another in place") {
+            vecA -= vecB;
+            THEN("the first one changes")
+                REQUIRE(vecA == Vec3(-1.0, 0.0, 1.0));
+        }
+
+        WHEN("we multiply one by another in place") {
+            vecA *= vecB;
+            THEN("the first one changes")
+                REQUIRE(vecA == Vec3(2.0, 4.0, 6.0));
+        }
+
+        WHEN("we divide one by another in place") {
+            vecA /= vecB;
+            THEN("the first one changes")
+                REQUIRE(vecA == Vec3(0.5, 1.0, 1.5));
+        }
+    }
+
+    GIVEN("A vector and a scalar ") {
+        Vec3 vec(1.0, 2.0, 3.0);
+        float scalar = 2.0;
+
+        WHEN("we multiply the vector by the scalar in place") {
+            vec *= scalar;
+            THEN("the vector changes")
+                REQUIRE(vec == Vec3(2.0, 4.0, 6.0));
+        }
+
+        WHEN("we divide the vector by the scalar in place") {
+            vec /= scalar;
+            THEN("the vector changes")
+                REQUIRE(vec == Vec3(0.5, 1.0, 1.5));
+        }
+    }
 }
 
-TEST(Vec3Test, vec_brackets)
+SCENARIO("Vector arithmetic", "[Vec3]")
 {
-    Vec3 vec;
+    GIVEN("Two vectors ") {
+        Vec3 vecA(1.0, 2.0, 3.0);
+        Vec3 vecB(2.0, 2.0, 2.0);
 
-    vec[0] = 1.0f;
-    vec[1] = 2.0f;
-    vec[2] = 3.0f;
+        WHEN("we add them") {
+            Vec3 sum = vecA + vecB;
+            THEN("we get an element-wise sum")
+                REQUIRE(sum == Vec3(3.0, 4.0, 5.0));
+        }
 
-    ASSERT_FLOAT_EQ(vec[0], 1.0f);
-    ASSERT_FLOAT_EQ(vec[1], 2.0f);
-    ASSERT_FLOAT_EQ(vec[2], 3.0f);
+        WHEN("we subtract them") {
+            Vec3 diff = vecA - vecB;
+            THEN("we get an element-wise difference")
+                REQUIRE(diff == Vec3(-1.0, 0.0, 1.0));
+        }
+
+        WHEN("we multiply them") {
+            Vec3 product = vecA * vecB;
+            THEN("we get an element-wise product")
+                REQUIRE(product == Vec3(2.0, 4.0, 6.0));
+        }
+
+        WHEN("we divide them") {
+            Vec3 ratio = vecA / vecB;
+            THEN("we get an element-wise ratio")
+                REQUIRE(ratio == Vec3(0.5, 1.0, 1.5));
+        }
+
+        WHEN("we apply dot") {
+            float dot_product = dot(vecA,vecB);
+            THEN("we get their dot product")
+                REQUIRE(dot_product == 12.0_a);
+        }
+    }
+
+    GIVEN("Two vectors ") {
+        Vec3 vecA(1.0, 0.0, 0.0);
+        Vec3 vecB(0.0, 1.0, 0.0);
+
+        WHEN("we apply cross") {
+            Vec3 cross_product = cross(vecA, vecB);
+            THEN("we get their cross product")
+                REQUIRE(cross_product == Vec3(0.0, 0.0, 1.0));
+        }
+    }
+
+    GIVEN("A vector and a scalar ") {
+        Vec3 vec(1.0, 2.0, 3.0);
+        float scalar = 2.0;
+
+        WHEN("") {
+            Vec3 result = vec * scalar;
+            THEN("we can multiply the vector by the scalar from the right")
+                REQUIRE(result == Vec3(2.0, 4.0, 6.0));
+        }
+
+        WHEN("") {
+            Vec3 result = scalar * vec;
+            THEN("we can multiply the vector by the scalar from the left")
+                REQUIRE(result == Vec3(2.0, 4.0, 6.0));
+        }
+
+        WHEN("") {
+            Vec3 result = vec / scalar;
+            THEN("we can divide the vector by the scalar")
+                REQUIRE(result == Vec3(0.5, 1.0, 1.5));
+        }
+    }
 }
-
-TEST(Vec3Test, vec_ostream)
-{
-    Vec3 vec(3.0f, 4.0f, 0.0f);
-
-    ostringstream stream;
-    stream << vec;
-
-    ASSERT_STREQ(stream.str().c_str(), "3 4 0");
-}
-
-TEST(Vec3Test, vec_minus)
-{
-    Vec3 vec(3.0f, 4.0f, 0.0f);
-    
-    Vec3 minus_vec = -vec;
-
-    ASSERT_FLOAT_EQ(minus_vec.x(), -3.0f);
-    ASSERT_FLOAT_EQ(minus_vec.y(), -4.0f);
-    ASSERT_FLOAT_EQ(minus_vec.z(), 0.0f);
-}
-
-TEST(Vec3Test, vec_plus_eq)
-{
-    Vec3 vec;
-
-    vec += Vec3(1.0f, 2.0f, 3.0f);
-
-    ASSERT_FLOAT_EQ(vec.x(), 1.0f);
-    ASSERT_FLOAT_EQ(vec.y(), 2.0f);
-    ASSERT_FLOAT_EQ(vec.z(), 3.0f);
-}
-
-TEST(Vec3Test, vec_minus_eq)
-{
-    Vec3 vec;
-
-    vec -= Vec3(1.0f, 2.0f, 3.0f);
-
-    ASSERT_FLOAT_EQ(vec.x(), -1.0f);
-    ASSERT_FLOAT_EQ(vec.y(), -2.0f);
-    ASSERT_FLOAT_EQ(vec.z(), -3.0f);
-}
-
-TEST(Vec3Test, vec_vec_mult_eq)
-{
-    Vec3 vecA(1.0f,2.0f,3.0f);
-    Vec3 vecB(2.0f, 2.0f, 2.0f);
-
-    vecA *= vecB;
-
-    ASSERT_FLOAT_EQ(vecA.x(), 2.0f);
-    ASSERT_FLOAT_EQ(vecA.y(), 4.0f);
-    ASSERT_FLOAT_EQ(vecA.z(), 6.0f);
-}
-
-TEST(Vec3Test, vec_vec_div_eq)
-{
-    Vec3 vecA(1.0f, 2.0f, 3.0f);
-    Vec3 vecB(2.0f, 2.0f, 2.0f);
-
-    vecA /= vecB;
-
-    ASSERT_FLOAT_EQ(vecA.x(), 0.5f);
-    ASSERT_FLOAT_EQ(vecA.y(), 1.0f);
-    ASSERT_FLOAT_EQ(vecA.z(), 1.5f);
-}
-
-TEST(Vec3Test, vec_scalar_mult_eq)
-{
-    Vec3 vec(1.0f, 2.0f, 3.0f);
-
-    vec *= 2;
-
-    ASSERT_FLOAT_EQ(vec.x(), 2.0f);
-    ASSERT_FLOAT_EQ(vec.y(), 4.0f);
-    ASSERT_FLOAT_EQ(vec.z(), 6.0f);
-}
-
-TEST(Vec3Test, vec_scalar_div_eq)
-{
-    Vec3 vec(1.0f, 2.0f, 3.0f);
-
-    vec /= 2;
-
-    ASSERT_FLOAT_EQ(vec.x(), 0.5f);
-    ASSERT_FLOAT_EQ(vec.y(), 1.0f);
-    ASSERT_FLOAT_EQ(vec.z(), 1.5f);
-}
-
-TEST(Vec3Test, vec_normalize_inplace)
-{
-    Vec3 vec(1.0f, 2.0f, 3.0f);
-
-    vec.normalize_inplace();
-
-    ASSERT_FLOAT_EQ(vec.length(), 1.0f);
-}
-
-TEST(Vec3Test, vec_vec_plus)
-{
-    Vec3 vecA(1.0f, 2.0f, 3.0f);
-    Vec3 vecB(2.0f, 2.0f, 2.0f);
-
-    Vec3 sum = vecA + vecB;
-
-    ASSERT_FLOAT_EQ(sum.x(), 3.0f);
-    ASSERT_FLOAT_EQ(sum.y(), 4.0f);
-    ASSERT_FLOAT_EQ(sum.z(), 5.0f);
-}
-
-TEST(Vec3Test, vec_vec_minus)
-{
-    Vec3 vecA(1.0f, 2.0f, 3.0f);
-    Vec3 vecB(2.0f, 2.0f, 2.0f);
-
-    Vec3 diff = vecA - vecB;
-
-    ASSERT_FLOAT_EQ(diff.x(), -1.0f);
-    ASSERT_FLOAT_EQ(diff.y(), 0.0f);
-    ASSERT_FLOAT_EQ(diff.z(), 1.0f);
-}
-
-TEST(Vec3Test, vec_vec_mult)
-{
-    Vec3 vecA(1.0f, 2.0f, 3.0f);
-    Vec3 vecB(2.0f, 2.0f, 2.0f);
-
-    Vec3 mult = vecA * vecB;
-
-    ASSERT_FLOAT_EQ(mult.x(), 2.0f);
-    ASSERT_FLOAT_EQ(mult.y(), 4.0f);
-    ASSERT_FLOAT_EQ(mult.z(), 6.0f);
-}
-
-TEST(Vec3Test, vec_vec_div)
-{
-    Vec3 vecA(1.0f, 2.0f, 3.0f);
-    Vec3 vecB(2.0f, 2.0f, 2.0f);
-
-    Vec3 div = vecA / vecB;
-
-    ASSERT_FLOAT_EQ(div.x(), 0.5f);
-    ASSERT_FLOAT_EQ(div.y(), 1.0f);
-    ASSERT_FLOAT_EQ(div.z(), 1.5f);
-}
-
-TEST(Vec3Test, vec_float_mult)
-{
-    Vec3 vec(1.0f, 2.0f, 3.0f);
-
-    vec = vec * 2;
-
-    ASSERT_FLOAT_EQ(vec.x(), 2.0f);
-    ASSERT_FLOAT_EQ(vec.y(), 4.0f);
-    ASSERT_FLOAT_EQ(vec.z(), 6.0f);
-}
-
-TEST(Vec3Test, float_vec_mult)
-{
-    Vec3 vec(1.0f, 2.0f, 3.0f);
-
-    vec = 2 * vec;
-
-    ASSERT_FLOAT_EQ(vec.x(), 2.0f);
-    ASSERT_FLOAT_EQ(vec.y(), 4.0f);
-    ASSERT_FLOAT_EQ(vec.z(), 6.0f);
-}
-
-TEST(Vec3Test, vec_normalize)
-{
-    Vec3 vec(1.0f, 2.0f, 3.0f);
-
-    Vec3 unit_vec = vec.normalize();
-
-    ASSERT_FLOAT_EQ(unit_vec.length(), 1.0f);
-}
-
-TEST(Vec3Test, vec_vec_dot)
-{
-    Vec3 vecA(1.0f, 2.0f, 3.0f);
-    Vec3 vecB(2.0f, 2.0f, 2.0f);
-
-    ASSERT_FLOAT_EQ(dot(vecA,vecB), 12.0f);
-}
-
-TEST(Vec3Test, vec_vec_cross)
-{
-    Vec3 vecA(1.0f, 0.0f, 0.0f);
-    Vec3 vecB(0.0f, 1.0f, 0.0f);
-
-    Vec3 vecC = cross(vecA, vecB);
-
-    ASSERT_FLOAT_EQ(vecC.x(), 0.0f);
-    ASSERT_FLOAT_EQ(vecC.y(), 0.0f);
-    ASSERT_FLOAT_EQ(vecC.z(), 1.0f);
-}
-
-
-
-

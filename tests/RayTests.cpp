@@ -1,6 +1,10 @@
-#include "gtest/gtest.h"
+#include "catch.hpp"
 
+#include "Ray.h"
 
-using namespace std;
-
+TEST_CASE("Ray operations", "[Ray]")
+{
+    Ray ray;
+    REQUIRE(true);
+}
 

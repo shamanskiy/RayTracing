@@ -93,51 +93,52 @@ public:
 
 };
 
-std::ostream& operator<<(std::ostream& os, const Vec3& vec) {
-	os << vec.x() << " " << vec.y() << " " << vec.z();
+inline std::ostream& operator<<(std::ostream& os, const Vec3& vec)
+{
+	os << vec[0] << " " << vec[1] << " " << vec[2];
 	return os;
 }
 
-Vec3 operator+(const Vec3& lhs, const Vec3& rhs)
+inline Vec3 operator+(const Vec3& lhs, const Vec3& rhs)
 {
 	return Vec3(lhs[0] + rhs[0], lhs[1] + rhs[1], lhs[2] + rhs[2]);
 }
 
-Vec3 operator-(const Vec3& lhs, const Vec3& rhs)
+inline Vec3 operator-(const Vec3& lhs, const Vec3& rhs)
 {
 	return Vec3(lhs[0] - rhs[0], lhs[1] - rhs[1], lhs[2] - rhs[2]);
 }
 
-Vec3 operator*(const Vec3& lhs, const Vec3& rhs)
+inline Vec3 operator*(const Vec3& lhs, const Vec3& rhs)
 {
 	return Vec3(lhs[0] * rhs[0], lhs[1] * rhs[1], lhs[2] * rhs[2]);
 }
 
-Vec3 operator/(const Vec3& lhs, const Vec3& rhs)
+inline Vec3 operator/(const Vec3& lhs, const Vec3& rhs)
 {
 	return Vec3(lhs[0] / rhs[0], lhs[1] / rhs[1], lhs[2] / rhs[2]);
 }
 
-Vec3 operator*(float lhs, const Vec3& rhs)
+inline Vec3 operator*(float lhs, const Vec3& rhs)
 {
 	return Vec3(lhs * rhs[0], lhs * rhs[1], lhs * rhs[2]);
 }
 
-Vec3 operator*(const Vec3& lhs, float rhs)
+inline Vec3 operator*(const Vec3& lhs, float rhs)
 {
 	return Vec3(lhs[0] * rhs, lhs[1] * rhs, lhs[2] * rhs);
 }
 
-Vec3 operator/(const Vec3& lhs, float rhs)
+inline Vec3 operator/(const Vec3& lhs, float rhs)
 {
 	return Vec3(lhs[0] / rhs, lhs[1] / rhs, lhs[2] / rhs);
 }
 
-float dot(const Vec3& lhs, const Vec3& rhs) {
+inline float dot(const Vec3& lhs, const Vec3& rhs) {
 	return lhs.x() * rhs.x() + lhs.y() * rhs.y() + lhs.z() * rhs.z();
 }
 
-Vec3 cross(const Vec3& lhs, const Vec3& rhs) {
+inline Vec3 cross(const Vec3& lhs, const Vec3& rhs) {
 	return Vec3(lhs.y() * rhs.z() - lhs.z() * rhs.y(),
 		-lhs.x() * rhs.z() + lhs.z() * rhs.x(),
 		lhs.x() * rhs.y() - lhs.y() * rhs.x());

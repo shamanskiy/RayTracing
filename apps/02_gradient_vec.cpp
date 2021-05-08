@@ -11,6 +11,7 @@ int main() {
     int ny = 100;
     Ray ray;
     Vec3 vec;
+    cout << vec << "\n";
 
     ofstream imageFile;
     imageFile.open("02_gradient_vec.ppm");
