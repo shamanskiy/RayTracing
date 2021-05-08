@@ -11,7 +11,7 @@ int main() {
     int ny = 100;
 
     ofstream imageFile;
-    imageFile.open("02_gradient_vec.ppm");
+    imageFile.open("gradient_vec.ppm");
 
     imageFile << "P3\n" << nx << " " << ny << "\n255\n";
 

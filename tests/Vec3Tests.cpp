@@ -1,18 +1,10 @@
 #include <sstream>
 
-#include "catch.hpp"
-
+#include "catch_utils.hpp"
 #include "Vec3.h"
 
 using namespace std;
 using namespace Catch::literals;
-
-bool operator==(const Vec3& lhs, const Vec3& rhs)
-{
-    return Approx(lhs.x()) == rhs.x() &&
-        Approx(lhs.y()) == rhs.y() &&
-        Approx(lhs.z()) == rhs.z();
-}
 
 SCENARIO("Inspecting a vector", "[Vec3]")
 {

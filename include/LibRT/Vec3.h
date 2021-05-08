@@ -4,77 +4,77 @@
 
 class Vec3 {
 private:
-	float elem[3];
+	float m_elem[3];
 
 public:
 	Vec3() {
-		elem[0] = 0.0f; elem[1] = 0.0f; elem[2] = 0.0f;
+		m_elem[0] = 0.0f; m_elem[1] = 0.0f; m_elem[2] = 0.0f;
 	}
 	Vec3(float x, float y, float z) {
-		elem[0] = x; elem[1] = y; elem[2] = z;
+		m_elem[0] = x; m_elem[1] = y; m_elem[2] = z;
 	}
 
-	float x() const { return elem[0]; }
-	float y() const { return elem[1]; }
-	float z() const { return elem[2]; }
-	float r() const { return elem[0]; }
-	float g() const { return elem[1]; }
-	float b() const { return elem[2]; }
+	float x() const { return m_elem[0]; }
+	float y() const { return m_elem[1]; }
+	float z() const { return m_elem[2]; }
+	float r() const { return m_elem[0]; }
+	float g() const { return m_elem[1]; }
+	float b() const { return m_elem[2]; }
 
-	Vec3 operator-() const { return Vec3(-elem[0],-elem[1],-elem[2]); }
-	float operator[](int i) const { return elem[i]; }
-	float& operator[](int i) { return elem[i]; }
+	Vec3 operator-() const { return Vec3(-m_elem[0],-m_elem[1],-m_elem[2]); }
+	float operator[](int i) const { return m_elem[i]; }
+	float& operator[](int i) { return m_elem[i]; }
 
 	Vec3& operator+=(const Vec3& rhs)
 	{
-		elem[0] += rhs.elem[0];
-		elem[1] += rhs.elem[1];
-		elem[2] += rhs.elem[2];
+		m_elem[0] += rhs.m_elem[0];
+		m_elem[1] += rhs.m_elem[1];
+		m_elem[2] += rhs.m_elem[2];
 		return *this;
 	}
 
 	Vec3& operator-=(const Vec3& rhs)
 	{
-		elem[0] -= rhs.elem[0];
-		elem[1] -= rhs.elem[1];
-		elem[2] -= rhs.elem[2];
+		m_elem[0] -= rhs.m_elem[0];
+		m_elem[1] -= rhs.m_elem[1];
+		m_elem[2] -= rhs.m_elem[2];
 		return *this;
 	}
 
 	Vec3& operator*=(const Vec3& rhs)
 	{
-		elem[0] *= rhs.elem[0];
-		elem[1] *= rhs.elem[1];
-		elem[2] *= rhs.elem[2];
+		m_elem[0] *= rhs.m_elem[0];
+		m_elem[1] *= rhs.m_elem[1];
+		m_elem[2] *= rhs.m_elem[2];
 		return *this;
 	}
 
 	Vec3& operator/=(const Vec3& rhs)
 	{
-		elem[0] /= rhs.elem[0];
-		elem[1] /= rhs.elem[1];
-		elem[2] /= rhs.elem[2];
+		m_elem[0] /= rhs.m_elem[0];
+		m_elem[1] /= rhs.m_elem[1];
+		m_elem[2] /= rhs.m_elem[2];
 		return *this;
 	}
 
 	Vec3& operator*=(float rhs)
 	{
-		elem[0] *= rhs;
-		elem[1] *= rhs;
-		elem[2] *= rhs;
+		m_elem[0] *= rhs;
+		m_elem[1] *= rhs;
+		m_elem[2] *= rhs;
 		return *this;
 	}
 
 	Vec3& operator/=(float rhs)
 	{
-		elem[0] /= rhs;
-		elem[1] /= rhs;
-		elem[2] /= rhs;
+		m_elem[0] /= rhs;
+		m_elem[1] /= rhs;
+		m_elem[2] /= rhs;
 		return *this;
 	}
 
 	float length_sq() const {
-		return elem[0] * elem[0] + elem[1] * elem[1] + elem[2] * elem[2];
+		return m_elem[0] * m_elem[0] + m_elem[1] * m_elem[1] + m_elem[2] * m_elem[2];
 	}
 
 	float length() const {
@@ -88,7 +88,7 @@ public:
 
 	Vec3 normalize() const {
 		float l = 1. / length();
-		return Vec3(elem[0] * l, elem[1] * l, elem[2] * l);
+		return Vec3(m_elem[0] * l, m_elem[1] * l, m_elem[2] * l);
 	}
 
 };
