@@ -3,6 +3,7 @@
 #include <chrono>
 
 #include "Ray.h"
+#include "HitableObject.h"
 
 using namespace std;
 
@@ -12,27 +13,12 @@ float map_y_to_zero_one(const Vec3& vec)
     return 0.5 * (unitDirection.y() + 1.0);
 }
 
-float hit_sphere(const Vec3& center, float radius, const Ray& ray)
-{
-    Vec3 AB = ray.origin() - center;
-    float a = ray.direction().length_sq();
-    float b = 2.0 * dot(ray.direction(), AB);
-    float c = (ray.origin() - center).length_sq() - radius*radius;
-    float discriminant = b * b - 4 * a * c;
-    if (discriminant < 0)
-        return -1;
-    else
-        return (- b - sqrt(discriminant)) / (2.0*a);
-}
-
 Vec3 color(const Ray& ray)
 {
-    float t = hit_sphere(Vec3(0.0, 0.0, -1.0), 0.5, ray);
+    Sphere sphere(Vec3(0.0, 0.0, -1.0), 0.5);
+    auto [t, point, normal] = sphere.testHit(ray);
     if (t > 0.0)
-    {
-        Vec3 normal = (ray.eval(t) - Vec3(0.0, 0.0, -1.0)).normalize();
-        return 0.5* ( normal + Vec3(1.0,1.0,1.0));
-    }
+        return 0.5 * ( normal + Vec3(1.0,1.0,1.0));
         
 
     t = map_y_to_zero_one(ray.direction());

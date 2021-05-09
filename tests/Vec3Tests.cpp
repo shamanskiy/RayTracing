@@ -51,7 +51,7 @@ SCENARIO("Default vector", "[Vec3]")
         Vec3 vec;
 
         WHEN("")
-            THEN("it has zero elements")
+            THEN("its elements are all zero")
                 REQUIRE(vec == Vec3(0.0, 0.0, 0.0));
     }
 }
@@ -149,33 +149,33 @@ SCENARIO("Vector arithmetic", "[Vec3]")
         Vec3 vecA(1.0, 2.0, 3.0);
         Vec3 vecB(2.0, 2.0, 2.0);
 
-        WHEN("we add them") {
+        WHEN("") {
             Vec3 sum = vecA + vecB;
-            THEN("we get an element-wise sum")
+            THEN("we can add them")
                 REQUIRE(sum == Vec3(3.0, 4.0, 5.0));
         }
 
-        WHEN("we subtract them") {
+        WHEN("") {
             Vec3 diff = vecA - vecB;
-            THEN("we get an element-wise difference")
+            THEN("we can subtract one from another")
                 REQUIRE(diff == Vec3(-1.0, 0.0, 1.0));
         }
 
-        WHEN("we multiply them") {
+        WHEN("") {
             Vec3 product = vecA * vecB;
-            THEN("we get an element-wise product")
+            THEN("we can multiply them element-wise")
                 REQUIRE(product == Vec3(2.0, 4.0, 6.0));
         }
 
-        WHEN("we divide them") {
+        WHEN("") {
             Vec3 ratio = vecA / vecB;
-            THEN("we get an element-wise ratio")
+            THEN("we can divide one by another element-wise")
                 REQUIRE(ratio == Vec3(0.5, 1.0, 1.5));
         }
 
-        WHEN("we apply dot") {
+        WHEN("") {
             float dot_product = dot(vecA,vecB);
-            THEN("we get their dot product")
+            THEN("we can compute their dot product")
                 REQUIRE(dot_product == 12.0_a);
         }
     }
@@ -184,9 +184,9 @@ SCENARIO("Vector arithmetic", "[Vec3]")
         Vec3 vecA(1.0, 0.0, 0.0);
         Vec3 vecB(0.0, 1.0, 0.0);
 
-        WHEN("we apply cross") {
+        WHEN("") {
             Vec3 cross_product = cross(vecA, vecB);
-            THEN("we get their cross product")
+            THEN("we can compute their cross product")
                 REQUIRE(cross_product == Vec3(0.0, 0.0, 1.0));
         }
     }
