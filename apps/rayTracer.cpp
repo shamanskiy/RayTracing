@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <chrono>
 
 #include "Ray.h"
 
@@ -32,7 +33,7 @@ Vec3 color(const Ray& ray)
 }
 
 int main() {
-
+    auto begin = std::chrono::high_resolution_clock::now();
     int nx = 200;
     int ny = 100;
 
@@ -62,4 +63,8 @@ int main() {
         }
 
     imageFile.close();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    printf("Time measured: %.3f seconds.\n", elapsed.count() * 1e-9);
 }
