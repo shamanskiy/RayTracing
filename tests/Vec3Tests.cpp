@@ -8,7 +8,7 @@ using namespace Catch::literals;
 
 SCENARIO("Inspecting a vector", "[Vec3]")
 {
-    GIVEN("A vector ") {
+    GIVEN("a vector ") {
         Vec3 vec(3.0, 4.0, 0.0);
 
         WHEN("") {
@@ -47,7 +47,7 @@ SCENARIO("Inspecting a vector", "[Vec3]")
 
 SCENARIO("Default vector", "[Vec3]")
 {
-    GIVEN("A default vector ") {
+    GIVEN("a default vector ") {
         Vec3 vec;
 
         WHEN("")
@@ -58,7 +58,7 @@ SCENARIO("Default vector", "[Vec3]")
 
 SCENARIO("Vector length operations", "[Vec3]")
 {
-    GIVEN("A vector ") {
+    GIVEN("a vector ") {
         Vec3 vec(3.0, 4.0, 0.0);
 
         WHEN("") 
@@ -96,7 +96,7 @@ SCENARIO("Vector length operations", "[Vec3]")
 
 SCENARIO("Vector arithmetic in-place", "[Vec3]")
 {
-    GIVEN("Two vectors ") {
+    GIVEN("two vectors ") {
         Vec3 vecA(1.0, 2.0, 3.0);
         Vec3 vecB(2.0, 2.0, 2.0);
 
@@ -125,7 +125,7 @@ SCENARIO("Vector arithmetic in-place", "[Vec3]")
         }
     }
 
-    GIVEN("A vector and a scalar ") {
+    GIVEN("a vector and a scalar ") {
         Vec3 vec(1.0, 2.0, 3.0);
         float scalar = 2.0;
 
@@ -145,7 +145,7 @@ SCENARIO("Vector arithmetic in-place", "[Vec3]")
 
 SCENARIO("Vector arithmetic", "[Vec3]")
 {
-    GIVEN("Two vectors ") {
+    GIVEN("two vectors ") {
         Vec3 vecA(1.0, 2.0, 3.0);
         Vec3 vecB(2.0, 2.0, 2.0);
 
@@ -180,7 +180,7 @@ SCENARIO("Vector arithmetic", "[Vec3]")
         }
     }
 
-    GIVEN("Two vectors ") {
+    GIVEN("two vectors ") {
         Vec3 vecA(1.0, 0.0, 0.0);
         Vec3 vecB(0.0, 1.0, 0.0);
 
@@ -191,7 +191,7 @@ SCENARIO("Vector arithmetic", "[Vec3]")
         }
     }
 
-    GIVEN("A vector and a scalar ") {
+    GIVEN("a vector and a scalar ") {
         Vec3 vec(1.0, 2.0, 3.0);
         float scalar = 2.0;
 
@@ -217,20 +217,20 @@ SCENARIO("Vector arithmetic", "[Vec3]")
 
 SCENARIO("Vector linear interpolation", "[Vec3]")
 {
-    GIVEN("Two vectors ") {
+    GIVEN("two vectors ") {
         Vec3 vecA(1.0, 0.0, 0.0);
         Vec3 vecB(0.0, 1.0, 0.0);
 
         WHEN("")
             THEN("we can blend them equally")
-            REQUIRE(lerp(vecA,vecB, 0.5) == Vec3(0.5, 0.5, 0.0));
+                REQUIRE(lerp(vecA,vecB, 0.5) == Vec3(0.5, 0.5, 0.0));
 
         WHEN("")
             THEN("we can lerp to the first one")
-            REQUIRE(lerp(vecA, vecB, 0.0) == Vec3(1.0, 0.0, 0.0));
+                REQUIRE(lerp(vecA, vecB, 0.0) == Vec3(1.0, 0.0, 0.0));
 
         WHEN("")
             THEN("we can lerp to the last one")
-            REQUIRE(lerp(vecA, vecB, 1.0) == Vec3(0.0, 1.0, 0.0));
+                REQUIRE(lerp(vecA, vecB, 1.0) == Vec3(0.0, 1.0, 0.0));
     }
 }

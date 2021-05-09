@@ -1,8 +1,10 @@
 add_executable(unit_tests
   main.cpp
-  Vec3Tests.cpp
-  RayTests.cpp
   catch_utils.hpp
+  EquationsTests.cpp
+  HitableObjectTests.cpp
+  RayTests.cpp
+  Vec3Tests.cpp
 )
 
 target_link_libraries(unit_tests
