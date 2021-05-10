@@ -1,10 +1,13 @@
 set(HEADERS_LIST
+  ${PROJECT_SOURCE_DIR}/include/LibRT/Equations.h
+  ${PROJECT_SOURCE_DIR}/include/LibRT/HitableObject.h
   ${PROJECT_SOURCE_DIR}/include/LibRT/Ray.h
   ${PROJECT_SOURCE_DIR}/include/LibRT/Vec3.h
 )
 
 set(SOURCES_LIST
-  ${PROJECT_SOURCE_DIR}/lib/Vec3.cpp
+  ${PROJECT_SOURCE_DIR}/lib/Equations.cpp
+  ${PROJECT_SOURCE_DIR}/lib/HitableObject.cpp
 )
 
 add_library(LibRT

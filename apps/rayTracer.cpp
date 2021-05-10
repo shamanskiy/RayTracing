@@ -1,7 +1,9 @@
 #include <fstream>
 #include <iostream>
+#include <chrono>
 
 #include "Ray.h"
+#include "HitableObject.h"
 
 using namespace std;
 
@@ -11,35 +13,31 @@ float map_y_to_zero_one(const Vec3& vec)
     return 0.5 * (unitDirection.y() + 1.0);
 }
 
-bool hit_sphere(const Vec3& center, float radius, const Ray& ray)
+Vec3 color(const Ray& ray, const Scene& scene)
 {
-    Vec3 AB = ray.origin() - center;
-    float a = ray.direction().length_sq();
-    float b = 2.0 * dot(ray.direction(), AB);
-    float c = (ray.origin() - center).length_sq() - radius*radius;
-    return (b * b - 4 * a * c > 0);
-}
-
-Vec3 color(const Ray& ray)
-{
-    if (hit_sphere(Vec3(0.0, 0.0, -1.0), 0.5, ray))
-        return Vec3(1.0, 0.0, 0.0);
-
-    float t = map_y_to_zero_one(ray.direction());
+    auto [t, point, normal] = scene.testRay(ray);
+    if (t > 0.0)
+        return 0.5 * ( normal + Vec3(1.0,1.0,1.0));
+        
+    t = map_y_to_zero_one(ray.direction());
     Vec3 white(1.0, 1.0, 1.0);
     Vec3 lightBlue(0.5, 0.7, 1.0);
     return lerp(white, lightBlue, t);
 }
 
 int main() {
-
+    auto begin = std::chrono::high_resolution_clock::now();
     int nx = 200;
     int ny = 100;
 
     ofstream imageFile;
-    imageFile.open("first_sphere.ppm");
+    imageFile.open("normal_sphere.ppm");
 
     imageFile << "P3\n" << nx << " " << ny << "\n255\n";
+
+    Scene scene;
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f));
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f));
 
     Vec3 origin(0.0,0.0,0.0);
     Vec3 upper_left_corner(-2.0, 1.0, -1.0);
@@ -52,7 +50,7 @@ int main() {
             float u = float(j) / nx;
             float v = float(i) / ny;
             Ray ray(origin, upper_left_corner + u * horizontal + v * vertical);
-            Vec3 col = color(ray);
+            Vec3 col = color(ray, scene);
 
             int ir = int(255.99 * col.r());
             int ig = int(255.99 * col.g());
@@ -62,4 +60,8 @@ int main() {
         }
 
     imageFile.close();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    printf("Time measured: %.3f seconds.\n", elapsed.count() * 1e-9);
 }
