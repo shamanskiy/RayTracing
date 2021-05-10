@@ -2,7 +2,7 @@
 
 #include "Equations.h"
 
-HitRecord Sphere::testHit(const Ray& ray, const Interval& intervalOfInterest) const
+HitRecord Sphere::testRay(const Ray& ray, const Interval& intervalOfInterest) const
 {
     auto [numSolutions, leftSolution, rightSolution] = solveHitEquation(ray);
 
@@ -37,3 +37,23 @@ std::tuple<int, float, float> Sphere::solveHitEquation(const Ray& ray) const
 
     return std::tuple{ equation.numberOfSolutions(), equation.leftSolution(), equation.rightSolution() };
 }
+
+HitRecord Scene::testRay(const Ray& ray, const Interval& intervalOfInterest) const
+{
+    HitRecord closestHitSoFar;
+    closestHitSoFar.t = std::numeric_limits<float>::max();
+    bool hitAnything = false;
+    for (auto& object : m_objects)
+    {
+        auto hit = object->testRay(ray, intervalOfInterest);
+        if (intervalOfInterest.includes(hit.t) && hit.t < closestHitSoFar.t)
+        {
+            closestHitSoFar = hit;
+            hitAnything = true;
+        }
+            
+    }
+
+    return hitAnything ? closestHitSoFar : HitRecord();
+}
+

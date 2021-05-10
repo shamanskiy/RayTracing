@@ -13,14 +13,12 @@ float map_y_to_zero_one(const Vec3& vec)
     return 0.5 * (unitDirection.y() + 1.0);
 }
 
-Vec3 color(const Ray& ray)
+Vec3 color(const Ray& ray, const Scene& scene)
 {
-    Sphere sphere(Vec3(0.0, 0.0, -1.0), 0.5);
-    auto [t, point, normal] = sphere.testHit(ray);
+    auto [t, point, normal] = scene.testRay(ray);
     if (t > 0.0)
         return 0.5 * ( normal + Vec3(1.0,1.0,1.0));
         
-
     t = map_y_to_zero_one(ray.direction());
     Vec3 white(1.0, 1.0, 1.0);
     Vec3 lightBlue(0.5, 0.7, 1.0);
@@ -37,6 +35,10 @@ int main() {
 
     imageFile << "P3\n" << nx << " " << ny << "\n255\n";
 
+    Scene scene;
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f));
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f));
+
     Vec3 origin(0.0,0.0,0.0);
     Vec3 upper_left_corner(-2.0, 1.0, -1.0);
     Vec3 horizontal(4.0, 0.0, 0.0);
@@ -48,7 +50,7 @@ int main() {
             float u = float(j) / nx;
             float v = float(i) / ny;
             Ray ray(origin, upper_left_corner + u * horizontal + v * vertical);
-            Vec3 col = color(ray);
+            Vec3 col = color(ray, scene);
 
             int ir = int(255.99 * col.r());
             int ig = int(255.99 * col.g());

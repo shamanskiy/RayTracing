@@ -17,15 +17,20 @@ public:
 	Vec3 eval(float t) const { return m_origin + t * m_direction; }
 };
 
+
+
 class Interval {
 	float m_min;
 	float m_max;
 
 public:
-	Interval() : m_min(0.0), m_max(std::numeric_limits<float>::max()) {}
+	static float limit_max() { return std::numeric_limits<float>::max(); }
+
+	Interval() : m_min(0.0), m_max(limit_max()) {}
 	Interval(float min, float max) : m_min(min), m_max(max) {}
 
 	float min() const { return m_min; }
 	float max() const { return m_max; }
 	bool includes(float t) const { return t >= m_min && t <= m_max; }
+
 };

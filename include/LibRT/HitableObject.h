@@ -1,6 +1,6 @@
 #pragma once
 
-#include <limits>
+#include <vector>
 
 #include "Vec3.h"
 #include "Ray.h"
@@ -16,7 +16,8 @@ struct HitRecord {
 };
 
 class HitableObject {
-	virtual HitRecord testHit(const Ray& ray, const Interval& intervalOfInterest = Interval()) const = 0;
+public:
+	virtual HitRecord testRay(const Ray& ray, const Interval& intervalOfInterest = Interval()) const = 0;
 };
 
 class Sphere : public HitableObject {
@@ -26,10 +27,17 @@ class Sphere : public HitableObject {
 public:
 	Sphere(Vec3 center, float radius) : m_center(center), m_radius(radius) {};
 
-	HitRecord testHit(const Ray& ray, const Interval& intervalOfInterest = Interval()) const override;
+	HitRecord testRay(const Ray& ray, const Interval& intervalOfInterest = Interval()) const override;
 
 private:
 	std::tuple<int,float,float> solveHitEquation(const Ray& ray) const;
 	HitRecord makeHitRecord(float t, const Ray& ray) const;
 };
 
+class Scene : public HitableObject {
+	std::vector<std::unique_ptr<HitableObject>> m_objects;
+
+public:
+	HitRecord testRay(const Ray& ray, const Interval& intervalOfInterest = Interval()) const override;
+	void addObject(std::unique_ptr<HitableObject> && object) { m_objects.push_back(std::move(object)); }
+};

@@ -73,9 +73,14 @@ SCENARIO("Interval tests", "[Interval]")
         WHEN("")
             THEN("its min is zero and its max is float_max") {
             REQUIRE(interval.min() == 0.0_a);
-            REQUIRE(interval.max() == std::numeric_limits<float>::max());
+            REQUIRE(interval.max() == Interval::limit_max());
 
         }
     }
+}
+
+TEST_CASE("Interval limit_max test", "[Interval]")
+{
+    REQUIRE(Interval::limit_max() == std::numeric_limits<float>::max());
 }
 

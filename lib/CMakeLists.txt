@@ -6,8 +6,8 @@ set(HEADERS_LIST
 )
 
 set(SOURCES_LIST
-  ${PROJECT_SOURCE_DIR}/lib/HitableObject.cpp
   ${PROJECT_SOURCE_DIR}/lib/Equations.cpp
+  ${PROJECT_SOURCE_DIR}/lib/HitableObject.cpp
 )
 
 add_library(LibRT
