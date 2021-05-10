@@ -7,7 +7,7 @@ HitRecord Sphere::testRay(const Ray& ray, const Interval& intervalOfInterest) co
     auto [numSolutions, leftSolution, rightSolution] = solveHitEquation(ray);
 
     if (numSolutions == 0)
-        return HitRecord();
+        return HitRecord::miss();
     
     if (intervalOfInterest.includes(leftSolution))
         return makeHitRecord(leftSolution, ray);
@@ -15,7 +15,7 @@ HitRecord Sphere::testRay(const Ray& ray, const Interval& intervalOfInterest) co
    if (intervalOfInterest.includes(rightSolution))
        return makeHitRecord(rightSolution, ray);
 
-   return HitRecord();
+   return HitRecord::miss();
 }
 
 HitRecord Sphere::makeHitRecord(float t, const Ray& ray) const
@@ -38,22 +38,27 @@ std::tuple<int, float, float> Sphere::solveHitEquation(const Ray& ray) const
     return std::tuple{ equation.numberOfSolutions(), equation.leftSolution(), equation.rightSolution() };
 }
 
+namespace {
+    bool closer(const HitRecord& hit, const HitRecord& closestHit) {
+        return hit.t < closestHit.t;
+    }
+}
+
 HitRecord Scene::testRay(const Ray& ray, const Interval& intervalOfInterest) const
 {
-    HitRecord closestHitSoFar;
-    closestHitSoFar.t = std::numeric_limits<float>::max();
+    auto closestHit = HitRecord::farAway();
     bool hitAnything = false;
+
     for (auto& object : m_objects)
     {
         auto hit = object->testRay(ray, intervalOfInterest);
-        if (intervalOfInterest.includes(hit.t) && hit.t < closestHitSoFar.t)
+        if (intervalOfInterest.includes(hit.t) && closer(hit,closestHit))
         {
-            closestHitSoFar = hit;
+            closestHit = hit;
             hitAnything = true;
         }
-            
     }
 
-    return hitAnything ? closestHitSoFar : HitRecord();
+    return hitAnything ? closestHit : HitRecord::miss();
 }
 

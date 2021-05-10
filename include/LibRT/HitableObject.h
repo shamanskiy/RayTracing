@@ -12,7 +12,14 @@ struct HitRecord {
 	Vec3 normal;
 
 	HitRecord(float t, Vec3 point, Vec3 normal) : t(t), point(point), normal(normal) {}
-	HitRecord() : t(-1.0), point(Vec3()), normal(Vec3()) {}
+
+	static HitRecord miss() {
+		return HitRecord{ -1.0, Vec3(), Vec3() };
+	}
+
+	static HitRecord farAway() {
+		return HitRecord{ Interval::limit_max() , Vec3(), Vec3() };
+	}
 };
 
 class HitableObject {
