@@ -1,9 +1,13 @@
 #include <fstream>
 #include <iostream>
 #include <chrono>
+#include <random>
 
-#include "Ray.h"
+#include <time.h>
+#include <cstdlib>
+
 #include "HitableObject.h"
+#include "Camera.h"
 
 using namespace std;
 
@@ -27,11 +31,13 @@ Vec3 color(const Ray& ray, const Scene& scene)
 
 int main() {
     auto begin = std::chrono::high_resolution_clock::now();
-    int nx = 200;
-    int ny = 100;
+    int nx = 600;
+    int ny = 300;
+    int ns = 100;
+    srand((unsigned)time(0));
 
     ofstream imageFile;
-    imageFile.open("normal_sphere.ppm");
+    imageFile.open("antialiasing.ppm");
 
     imageFile << "P3\n" << nx << " " << ny << "\n255\n";
 
@@ -39,19 +45,20 @@ int main() {
     scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f));
     scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f));
 
-    Vec3 origin(0.0,0.0,0.0);
-    Vec3 upper_left_corner(-2.0, 1.0, -1.0);
-    Vec3 horizontal(4.0, 0.0, 0.0);
-    Vec3 vertical(0.0, -2.0, 0.0);
+    Camera camera;
 
     for (int i = 0; i < ny; i++)
         for (int j = 0; j < nx; j++)
         {
-            float u = float(j) / nx;
-            float v = float(i) / ny;
-            Ray ray(origin, upper_left_corner + u * horizontal + v * vertical);
-            Vec3 col = color(ray, scene);
-
+            Vec3 col;
+            for (int s = 0; s < ns; s++)
+            {
+                float u = float(j + (float)rand() / RAND_MAX) / nx;
+                float v = float(i + (float)rand() / RAND_MAX) / ny;
+                col += color(camera.getRay(u, v), scene);
+            }
+            
+            col /= ns;
             int ir = int(255.99 * col.r());
             int ig = int(255.99 * col.g());
             int ib = int(255.99 * col.b());

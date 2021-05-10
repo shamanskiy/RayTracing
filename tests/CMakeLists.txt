@@ -1,6 +1,7 @@
 add_executable(unit_tests
   main.cpp
   catch_utils.hpp
+  CameraTests.cpp
   EquationsTests.cpp
   HitableObjectTests.cpp
   RayTests.cpp

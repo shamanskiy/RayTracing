@@ -1,4 +1,5 @@
 set(HEADERS_LIST
+  ${PROJECT_SOURCE_DIR}/include/LibRT/Camera.h
   ${PROJECT_SOURCE_DIR}/include/LibRT/Equations.h
   ${PROJECT_SOURCE_DIR}/include/LibRT/HitableObject.h
   ${PROJECT_SOURCE_DIR}/include/LibRT/Ray.h
