@@ -17,11 +17,19 @@ float map_y_to_zero_one(const Vec3& vec)
     return 0.5 * (unitDirection.y() + 1.0);
 }
 
+Vec3 randomUnitSphere() {
+    Vec3 p;
+    do {
+        p = 2.0 * Vec3((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX) - Vec3(1.0, 1.0, 1.0);
+    } while (p.length_sq() >= 1.0);
+    return p;
+}
+
 Vec3 color(const Ray& ray, const Scene& scene)
 {
-    auto [t, point, normal] = scene.testRay(ray);
+    auto [t, point, normal] = scene.testRay(ray, Interval(0.001, Interval::limit_max()));
     if (t > 0.0)
-        return 0.5 * ( normal + Vec3(1.0,1.0,1.0));
+        return 0.5 * color(Ray(point, normal + randomUnitSphere()), scene);
         
     t = map_y_to_zero_one(ray.direction());
     Vec3 white(1.0, 1.0, 1.0);
@@ -31,8 +39,8 @@ Vec3 color(const Ray& ray, const Scene& scene)
 
 int main() {
     auto begin = std::chrono::high_resolution_clock::now();
-    int nx = 600;
-    int ny = 300;
+    int nx = 2000;
+    int ny = 1000;
     int ns = 100;
     srand((unsigned)time(0));
 
@@ -59,9 +67,9 @@ int main() {
             }
             
             col /= ns;
-            int ir = int(255.99 * col.r());
-            int ig = int(255.99 * col.g());
-            int ib = int(255.99 * col.b());
+            int ir = int(255.99 * sqrt(col.r()));
+            int ig = int(255.99 * sqrt(col.g()));
+            int ib = int(255.99 * sqrt(col.b()));
 
             imageFile << ir << " " << ig << " " << ib << "\n";
         }
