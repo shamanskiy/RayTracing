@@ -5,6 +5,7 @@ add_executable(unit_tests
   EquationsTests.cpp
   HitableObjectTests.cpp
   RayTests.cpp
+  UtilsTests.cpp
   Vec3Tests.cpp
 )
 

@@ -8,6 +8,7 @@
 
 #include "HitableObject.h"
 #include "Camera.h"
+#include "Utils.h"
 
 using namespace std;
 
@@ -39,13 +40,13 @@ Vec3 color(const Ray& ray, const Scene& scene)
 
 int main() {
     auto begin = std::chrono::high_resolution_clock::now();
-    int nx = 2000;
-    int ny = 1000;
+    int nx = 200;
+    int ny = 100;
     int ns = 100;
     srand((unsigned)time(0));
 
     ofstream imageFile;
-    imageFile.open("antialiasing.ppm");
+    imageFile.open("diffuse_material.ppm");
 
     imageFile << "P3\n" << nx << " " << ny << "\n255\n";
 
@@ -56,6 +57,12 @@ int main() {
     Camera camera;
 
     for (int i = 0; i < ny; i++)
+    {
+        if (i%10 == 0)
+        {
+            std::cout << Utils::progressLine(i, ny,50) << "\r";
+            std::cout.flush();
+        }
         for (int j = 0; j < nx; j++)
         {
             Vec3 col;
@@ -65,7 +72,7 @@ int main() {
                 float v = float(i + (float)rand() / RAND_MAX) / ny;
                 col += color(camera.getRay(u, v), scene);
             }
-            
+
             col /= ns;
             int ir = int(255.99 * sqrt(col.r()));
             int ig = int(255.99 * sqrt(col.g()));
@@ -73,6 +80,7 @@ int main() {
 
             imageFile << ir << " " << ig << " " << ib << "\n";
         }
+    }
 
     imageFile.close();
 
