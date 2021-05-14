@@ -38,25 +38,32 @@ Vec3 color(const Ray& ray, const Scene& scene)
     return lerp(white, lightBlue, t);
 }
 
+void reportElapsedTime(ostream& output, chrono::steady_clock::time_point begin)
+{
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    output.precision(3);
+    output << "Complete in " << elapsed.count() * 1e-9 << " seconds\n";
+}
+
 int main() {
-    auto begin = std::chrono::high_resolution_clock::now();
+    srand((unsigned)time(0));
     int nx = 200;
     int ny = 100;
     int ns = 100;
-    srand((unsigned)time(0));
 
-    ofstream imageFile;
-    imageFile.open("diffuse_material.ppm");
-
-    imageFile << "P3\n" << nx << " " << ny << "\n255\n";
-
+    Camera camera;
     Scene scene;
     scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f));
     scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f));
 
-    Camera camera;
-    ProgressBar bar(ny,35);
-    
+    std::string outputFileName("diffuse_material.ppm");
+    ofstream imageFile(outputFileName);
+    imageFile << "P3\n" << nx << " " << ny << "\n255\n";
+
+    auto begin = std::chrono::high_resolution_clock::now();
+    std::cout << "Rendering...\n";
+    ProgressBar bar(ny, 35);
     for (int i = 0; i < ny; i++)
     {
         bar.displayNext(std::cout);
@@ -82,7 +89,6 @@ int main() {
 
     imageFile.close();
 
-    auto end = std::chrono::high_resolution_clock::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    printf("Time measured: %.3f seconds.\n", elapsed.count() * 1e-9);
+    reportElapsedTime(cout,begin);
+    std::cout << "Image saved to " << outputFileName << "\n";
 }
