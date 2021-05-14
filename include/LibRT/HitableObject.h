@@ -25,6 +25,7 @@ struct HitRecord {
 class HitableObject {
 public:
 	virtual HitRecord testRay(const Ray& ray, const Interval& intervalOfInterest = Interval()) const = 0;
+    virtual ~HitableObject() {}
 };
 
 class Sphere : public HitableObject {

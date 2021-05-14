@@ -55,14 +55,12 @@ int main() {
     scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f));
 
     Camera camera;
-
+    ProgressBar bar(ny,35);
+    
     for (int i = 0; i < ny; i++)
     {
-        if (i%10 == 0)
-        {
-            std::cout << Utils::progressLine(i, ny,50) << "\r";
-            std::cout.flush();
-        }
+        bar.displayNext(std::cout);
+        
         for (int j = 0; j < nx; j++)
         {
             Vec3 col;
