@@ -5,8 +5,7 @@ SCENARIO("Interval tests", "[Interval]")
     GIVEN("an interval") {
         Interval interval(1.0, 2.0);
 
-        WHEN("")
-            THEN("we can access its limits") {
+        THEN("we can access its limits") {
             REQUIRE(interval.min() == 1.0_a);
             REQUIRE(interval.max() == 2.0_a);
         }
@@ -37,8 +36,7 @@ SCENARIO("Interval tests", "[Interval]")
     GIVEN("a default interval") {
         Interval interval;
 
-        WHEN("")
-            THEN("its min is zero and its max is float_max") {
+        THEN("its min is zero and its max is float_max") {
             REQUIRE(interval.min() == 0.0_a);
             REQUIRE(interval.max() == Interval::limit_max());
 

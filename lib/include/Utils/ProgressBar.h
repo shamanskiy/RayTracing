@@ -5,15 +5,14 @@
 
 class ProgressBar
 {
-    int currentStep;
-    int totalSteps;
-    int completeSegments;
-    int totalSegments;
-    
+    int m_currentStep;
+    int m_totalSteps;
+    int m_completeSegments;
+    int m_totalSegments;
     
 public:
     ProgressBar(int totalSteps, int totalSegments)
-    : currentStep(0), totalSteps(totalSteps), completeSegments(-1), totalSegments(totalSegments) {}
+    : m_currentStep(0), m_totalSteps(totalSteps), m_completeSegments(-1), m_totalSegments(totalSegments) {}
     
     void displayNext(std::ostream & output);
     

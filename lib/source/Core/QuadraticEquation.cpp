@@ -7,12 +7,12 @@ QuadraticEquation::QuadraticEquation(float a, float b, float c) :
 	m_discriminant(0.0),
 	m_sqrtDiscriminant(0.0),
 	m_leftSolution(0.0),
-	m_rightSolution(0.0)
+	m_rightSolution(0.0) 
 {
 	solve();
 }
 
-int QuadraticEquation::numberOfSolutions() const
+int QuadraticEquation::numberOfSolutions() const 
 {
 	if (m_discriminant > 0.0)
 		return 2;

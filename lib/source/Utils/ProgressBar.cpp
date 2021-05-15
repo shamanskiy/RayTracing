@@ -4,9 +4,9 @@
 
 void ProgressBar::displayNext(std::ostream &output)
 {
-    currentStep++;
+    m_currentStep++;
     
-    if (currentStep == totalSteps)
+    if (m_currentStep == m_totalSteps)
         output << generateCompleteString() << "\n";
     else if (numberCompleteSegmentsIsSame())
         return;
@@ -17,9 +17,9 @@ void ProgressBar::displayNext(std::ostream &output)
 bool ProgressBar::numberCompleteSegmentsIsSame()
 {
     int newCompleteSegments = computeCompleteSegments();
-    if (newCompleteSegments > completeSegments)
+    if (newCompleteSegments > m_completeSegments)
     {
-        completeSegments = newCompleteSegments;
+        m_completeSegments = newCompleteSegments;
         return false;
     }
     else
@@ -28,18 +28,18 @@ bool ProgressBar::numberCompleteSegmentsIsSame()
 
 int ProgressBar::computeCompleteSegments() const
 {
-    float progress = float(currentStep) / totalSteps;
-    return floor(progress * totalSegments);
+    float progress = float(m_currentStep) / m_totalSteps;
+    return floor(progress * m_totalSegments);
 }
 
 std::string ProgressBar::generateCompleteString() const
 {
-    return '[' + std::string(totalSegments,'=') + ']';
+    return '[' + std::string(m_totalSegments,'=') + ']';
 }
 
 std::string ProgressBar::generateIncompleteString() const
 {
-    int numEqualSigns = completeSegments;
+    int numEqualSigns = m_completeSegments;
     int numSpaces = computeEmptySegments(numEqualSigns);
     
     return '[' + std::string(numEqualSigns,'=') + '>' + std::string(numSpaces,' ') + ']';
@@ -47,7 +47,7 @@ std::string ProgressBar::generateIncompleteString() const
 
 int ProgressBar::computeEmptySegments(int completeSegments) const
 {
-    return totalSegments - completeSegments - 1;
+    return m_totalSegments - completeSegments - 1;
 }
 
 

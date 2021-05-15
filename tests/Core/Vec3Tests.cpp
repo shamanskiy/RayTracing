@@ -17,19 +17,17 @@ SCENARIO("Inspecting a vector", "[Vec3]")
                 REQUIRE(stream.str() == "3 4 0");
         }
 
-        WHEN("")
-            THEN("we can access its elements as xyz") {
-                REQUIRE(vec.x() == 3.0_a);
-                REQUIRE(vec.y() == 4.0_a);
-                REQUIRE(vec.z() == 0.0_a);
-            }
+        THEN("we can access its elements as xyz") {
+            REQUIRE(vec.x() == 3.0_a);
+            REQUIRE(vec.y() == 4.0_a);
+            REQUIRE(vec.z() == 0.0_a);
+        }
 
-        WHEN("")
-            THEN("we can access its elements as rgb") {
-                REQUIRE(vec.r() == 3.0_a);
-                REQUIRE(vec.g() == 4.0_a);
-                REQUIRE(vec.b() == 0.0_a);
-            }
+        THEN("we can access its elements as rgb") {
+            REQUIRE(vec.r() == 3.0_a);
+            REQUIRE(vec.g() == 4.0_a);
+            REQUIRE(vec.b() == 0.0_a);
+        }
 
         WHEN("") {
             vec[0] = 1.0;
@@ -49,9 +47,8 @@ SCENARIO("Default vector", "[Vec3]")
     GIVEN("a default vector ") {
         Vec3 vec;
 
-        WHEN("")
-            THEN("its elements are all zero")
-                REQUIRE(vec == Vec3(0.0, 0.0, 0.0));
+        THEN("its elements are all zero")
+            REQUIRE(vec == Vec3(0.0, 0.0, 0.0));
     }
 }
 
@@ -60,13 +57,11 @@ SCENARIO("Vector length operations", "[Vec3]")
     GIVEN("a vector ") {
         Vec3 vec(3.0, 4.0, 0.0);
 
-        WHEN("") 
-            THEN("we can compute its length")
-                REQUIRE(vec.length() == 5.0_a);
+        THEN("we can compute its length")
+            REQUIRE(vec.length() == 5.0_a);
 
-        WHEN("") 
-            THEN("we can compute its squared length")
-                REQUIRE(vec.length_sq() == 25.0_a);
+        THEN("we can compute its squared length")
+            REQUIRE(vec.length_sq() == 25.0_a);
   
         WHEN("we normalize it")
         {
