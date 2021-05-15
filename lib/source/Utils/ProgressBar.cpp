@@ -50,4 +50,9 @@ int ProgressBar::computeEmptySegments(int completeSegments) const
     return m_totalSegments - completeSegments - 1;
 }
 
+void ProgressBar::reset()
+{
+    m_currentStep = 0;
+    m_completeSegments = -1;
+}
 

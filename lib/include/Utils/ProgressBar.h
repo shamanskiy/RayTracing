@@ -15,6 +15,7 @@ public:
     : m_currentStep(0), m_totalSteps(totalSteps), m_completeSegments(-1), m_totalSegments(totalSegments) {}
     
     void displayNext(std::ostream & output);
+    void reset();
     
 private:
     
