@@ -1,6 +1,6 @@
 #include <sstream>
 
-#include "catch_utils.hpp"
+#include "TestsUtils.h"
 #include "Core/Vec3.h"
 
 using namespace std;

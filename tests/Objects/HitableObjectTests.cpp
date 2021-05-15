@@ -1,4 +1,4 @@
-#include "catch_utils.hpp"
+#include "TestsUtils.h"
 
 #include "Objects/HitableObject.h"
 #include "Core/Ray.h"
