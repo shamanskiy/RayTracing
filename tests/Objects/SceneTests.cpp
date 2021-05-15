@@ -1,65 +1,7 @@
 #include "TestsUtils.h"
 
-#include "Objects/HitableObject.h"
-#include "Core/Ray.h"
-
-TEST_CASE("Hit record: miss", "[HitRecord]") 
-{
-    auto noHit = HitRecord::miss();
-    REQUIRE(noHit.t == -1.0_a);
-}
-
-TEST_CASE("Hit record: far away", "[HitRecord]")
-{
-    auto noHit = HitRecord::farAway();
-    REQUIRE(noHit.t == Interval::limit_max());
-}
-
-SCENARIO("Sphere hit tests", "[Sphere]")
-{
-    GIVEN("") {
-        Sphere sphere(Vec3(0.0, 0.0, 0.0), 2.0);
-
-        WHEN("") {
-            Ray ray(Vec3(5.0, 0.0, 0.0), Vec3(-1.0, 0.0, 0.0));
-            auto hit = sphere.testRay(ray);
-
-            THEN("got a hit") {
-                REQUIRE(hit.t == 3.0_a);
-                REQUIRE(hit.point == Vec3(2.0, 0.0, 0.0));
-                REQUIRE(hit.normal == Vec3(1.0, 0.0, 0.0));
-            }
-        }
-
-        WHEN("") {
-            Ray ray(Vec3(5.0, 0.0, 0.0), Vec3(-1.0, 0.0, 0.0));
-            Interval interval(1.0, 2.0);
-            auto hit = sphere.testRay(ray, interval);
-
-            THEN("hit outside of interval")
-                REQUIRE(hit.t == -1.0_a);
-        }
-
-        WHEN("") {
-            Ray ray(Vec3(5.0, 0.0, 0.0), Vec3(0.0, 1.0, 0.0));
-            auto hit = sphere.testRay(ray);
-
-            THEN("ray misses the sphere")
-                REQUIRE(hit.t == -1.0_a);
-        }
-
-        WHEN("") {
-            Ray ray(Vec3(5.0, 2.0, 0.0), Vec3(-1.0, 0.0, 0.0));
-            auto hit = sphere.testRay(ray);
-
-            THEN("ray touches the sphere"){
-                REQUIRE(hit.t == 5.0_a);
-                REQUIRE(hit.point == Vec3(0.0, 2.0, 0.0));
-                REQUIRE(hit.normal == Vec3(0.0, 1.0, 0.0));
-            }
-        }
-    }
-}
+#include "Objects/Scene.h"
+#include "Objects/Sphere.h"
 
 SCENARIO("Scene tests", "[Scene]")
 {
@@ -81,7 +23,7 @@ SCENARIO("Scene tests", "[Scene]")
 
         WHEN("") {
             Ray ray(Vec3(5.0, 0.0, 0.0), Vec3(-1.0, 0.0, 0.0));
-            auto hit = scene.testRay(ray, Interval(5.0,7.5));
+            auto hit = scene.testRay(ray, Interval(5.0, 7.5));
 
             THEN("hit the first sphere on the back") {
                 REQUIRE(hit.t == 7.0_a);
@@ -120,7 +62,6 @@ SCENARIO("Scene tests", "[Scene]")
                 REQUIRE(hit.normal == Vec3(0.0, 1.0, 0.0));
             }
         }
-            
+
     }
 }
-

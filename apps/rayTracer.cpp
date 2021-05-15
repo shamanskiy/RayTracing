@@ -6,8 +6,9 @@
 #include <time.h>
 #include <cstdlib>
 
-#include "Objects/HitableObject.h"
 #include "Core/Camera.h"
+#include "Objects/Scene.h"
+#include "Objects/Sphere.h"
 #include "Utils/ProgressBar.h"
 
 using namespace std;

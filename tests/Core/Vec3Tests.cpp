@@ -1,7 +1,6 @@
 #include <sstream>
 
 #include "TestsUtils.h"
-#include "Core/Vec3.h"
 
 using namespace std;
 using namespace Catch::literals;
