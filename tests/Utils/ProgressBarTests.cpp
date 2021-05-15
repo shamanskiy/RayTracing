@@ -38,6 +38,17 @@ SCENARIO("Progress bar tests", "[ProgressBar]")
 			THEN("")
 				REQUIRE(oss.str() == "[=> ]\r[==>]\r[===]\n");
 		}
+
+		WHEN("we reset after one step")
+		{
+			std::ostringstream oss;
+			bar.displayNext(oss);
+			bar.reset();
+			bar.displayNext(oss);
+
+			THEN("")
+				REQUIRE(oss.str() == "[=> ]\r[=> ]\r");
+		}
 	}
 
 	GIVEN("A width-2 progress bar for 4 steps")

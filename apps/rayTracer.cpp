@@ -60,10 +60,7 @@ int main() {
     scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f));
     scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f));
 
-    std::string outputFileName("diffuse_material.ppm");
-    ofstream imageFile(outputFileName);
-    imageFile << "P3\n" << width << " " << height << "\n255\n";
-
+  
     auto begin = std::chrono::high_resolution_clock::now();
     std::cout << "Rendering...\n";
     ProgressBar bar(height, 35);
@@ -87,6 +84,9 @@ int main() {
     reportElapsedTime(cout, begin);
 
     std::cout << "Saving...\n";
+    std::string outputFileName("diffuse_material.ppm");
+    ofstream imageFile(outputFileName);
+    imageFile << "P3\n" << width << " " << height << "\n255\n";
     begin = std::chrono::high_resolution_clock::now();
     bar.reset();
     for (int i = 0; i < height; i++)
