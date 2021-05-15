@@ -1,6 +1,6 @@
 #include "catch_utils.hpp"
 
-#include "Utils.h"
+#include "Utils/ProgressBar.h"
 
 #include <sstream>
 

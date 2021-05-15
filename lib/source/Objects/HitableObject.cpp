@@ -1,6 +1,6 @@
-#include "HitableObject.h"
+#include "Objects/HitableObject.h"
 
-#include "Equations.h"
+#include "Core/QuadraticEquation.h"
 
 HitRecord Sphere::testRay(const Ray& ray, const Interval& intervalOfInterest) const
 {

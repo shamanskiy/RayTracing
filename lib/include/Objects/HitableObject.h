@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "Vec3.h"
-#include "Ray.h"
+#include "Core/Vec3.h"
+#include "Core/Ray.h"
 
 
 struct HitRecord {

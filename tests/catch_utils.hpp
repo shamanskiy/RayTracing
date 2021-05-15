@@ -2,7 +2,7 @@
 
 #include "catch.hpp"
 
-#include "Vec3.h"
+#include "Core/Vec3.h"
 
 using namespace Catch::literals;
 

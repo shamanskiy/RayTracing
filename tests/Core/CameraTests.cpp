@@ -1,6 +1,6 @@
 #include "catch_utils.hpp"
 
-#include "Camera.h"
+#include "Core/Camera.h"
 
 SCENARIO("Camera tests", "[Camera]")
 {

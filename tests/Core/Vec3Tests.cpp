@@ -1,7 +1,7 @@
 #include <sstream>
 
 #include "catch_utils.hpp"
-#include "Vec3.h"
+#include "Core/Vec3.h"
 
 using namespace std;
 using namespace Catch::literals;

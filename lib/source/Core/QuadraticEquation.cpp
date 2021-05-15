@@ -1,4 +1,4 @@
-#include "Equations.h"
+#include "Core/QuadraticEquation.h"
 
 #include <math.h>
 

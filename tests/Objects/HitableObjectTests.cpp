@@ -1,7 +1,7 @@
 #include "catch_utils.hpp"
 
-#include "HitableObject.h"
-#include "Ray.h"
+#include "Objects/HitableObject.h"
+#include "Core/Ray.h"
 
 TEST_CASE("Hit record: miss", "[HitRecord]") 
 {

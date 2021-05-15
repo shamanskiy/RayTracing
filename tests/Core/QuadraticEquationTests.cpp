@@ -1,6 +1,6 @@
 #include "catch_utils.hpp"
 
-#include "Equations.h"
+#include "Core/QuadraticEquation.h"
 
 TEST_CASE("Quadratic equation: two solutions", "[QuadraticEquation]")
 {

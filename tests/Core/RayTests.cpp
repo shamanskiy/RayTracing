@@ -1,6 +1,6 @@
 #include "catch_utils.hpp"
 
-#include "Ray.h"
+#include "Core/Ray.h"
 
 SCENARIO("Inspecting a ray", "[Ray]")
 {
