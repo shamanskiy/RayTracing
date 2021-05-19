@@ -83,11 +83,20 @@ int main() {
     }
     reportElapsedTime(cout, begin);
 
-    std::cout << "Saving...\n";
+
+
     std::string outputFileName("diffuse_material.ppm");
+    std::cout << "Saving...\n";
+    begin = std::chrono::high_resolution_clock::now();
+    image.save(outputFileName);
+    reportElapsedTime(cout, begin);
+    std::cout << "Image saved to " << outputFileName << "\n";
+
+
+
+
     ofstream imageFile(outputFileName);
     imageFile << "P3\n" << width << " " << height << "\n255\n";
-    begin = std::chrono::high_resolution_clock::now();
     bar.reset();
     for (int i = 0; i < height; i++)
     {
@@ -106,6 +115,4 @@ int main() {
 
     imageFile.close();
 
-    reportElapsedTime(cout, begin);
-    std::cout << "Image saved to " << outputFileName << "\n";
 }

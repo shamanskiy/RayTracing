@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <ostream>
 
 #include "Core/SmallBaseClasses.h"
 
@@ -19,8 +20,17 @@ public:
 	size_t height() const { return m_height; }
 	size_t width() const { return m_width; }
 
+	const Vec3& operator()(size_t row, size_t col) const
+	{
+		return m_pixels.at(row * m_width + col);
+	}
+
 	Vec3& operator()(size_t row, size_t col)
 	{
 		return m_pixels.at(row * m_width + col);
 	}
+
+	
+
+	void saveAsPPM(std::ostream& output) const;
 };

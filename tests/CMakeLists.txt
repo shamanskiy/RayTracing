@@ -1,4 +1,5 @@
 file(GLOB_RECURSE test_files *.cpp)
+message("${test_files}")
 
 add_executable(UnitTests
   TestsUtils.h
