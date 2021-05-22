@@ -1,8 +1,8 @@
-#include "Core/Image.h"
-
 #include <fstream>
-#include "Utils/ProgressBar.h"
 #include <iostream>
+
+#include "Core/Image.h"
+#include "Utils/ProgressBar.h"
 
 namespace
 {

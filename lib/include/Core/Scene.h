@@ -8,8 +8,9 @@ class Scene
 	HitableCollection m_objects;
 	Vec3 m_skyColorLow;
 	Vec3 m_skyColorHigh;
+
 public:
-	Scene() : m_skyColorLow(1.0, 1.0, 1.0), m_skyColorHigh(0.5, 0.7, 1.0) {}
+	Scene() : m_skyColorLow(Color::white), m_skyColorHigh(Color::lightblue) {}
 
 	void setSkyGradient(const Vec3& bottomColor, const Vec3& topColor)
 	{
@@ -18,7 +19,8 @@ public:
 	}
 
 	void addObject(std::unique_ptr<HitableObject>&& object) { m_objects.addObject(std::move(object)); }
-
 	Vec3 testRay(const Ray& ray) const;
+
+private:
 	Vec3 hitSky(const Ray& ray) const;
 };

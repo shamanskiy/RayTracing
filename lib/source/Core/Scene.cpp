@@ -1,7 +1,6 @@
 #include "Core/Scene.h"
 #include "Core/Random.h"
 
-
 Vec3 Scene::hitSky(const Ray& ray) const
 {
 	Vec3 unitDirection = ray.direction().normalize();

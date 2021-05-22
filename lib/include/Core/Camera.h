@@ -25,8 +25,10 @@ class Camera {
 public:
     Camera(const CameraSettings& settings) : m_settings(settings) {}
 
-    Ray getRay(float u, float v) const;
     Image render(const Scene& scene) const;
-    Vec3 computePixelColor(const Scene& scene, size_t i, size_t j) const;
+
+private:
+    Ray getRay(float uParam, float vParam) const;
+    Vec3 computePixelColor(const Scene& scene, size_t row, size_t column) const;
 };
 

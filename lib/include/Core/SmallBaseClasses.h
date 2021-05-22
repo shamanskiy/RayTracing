@@ -198,3 +198,21 @@ struct HitRecord {
 		return HitRecord{ Interval::limit_max() , Vec3(), Vec3() };
 	}
 };
+
+namespace Color
+{
+	const Vec3 white(1.0, 1.0, 1.0);
+	const Vec3 red(1.0, 0.0, 0.0);
+	const Vec3 green(0.0, 1.0, 0.0);
+	const Vec3 blue(0.0, 0.0, 1.0);
+	const Vec3 black(0.0, 0.0, 0.0);
+	const Vec3 lightblue(0.5, 0.7, 1.0);
+}
+
+namespace Space3D
+{
+	const Vec3 origin(0.0, 0.0, 0.0);
+	const Vec3 xAxis(1.0, 0.0, 0.0);
+	const Vec3 yAxis(0.0, 1.0, 0.0);
+	const Vec3 zAxis(0.0, 0.0, 1.0);
+}

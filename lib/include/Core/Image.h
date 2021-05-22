@@ -31,6 +31,6 @@ public:
 		return m_pixels.at(row * m_width + col);
 	}
 
-	void saveAsPPM(std::ostream& output, Verbosity verbosity = Verbosity::none) const;
+	void saveAsPPM(std::ostream& output, Verbosity verbosity) const;
 	void save(const std::string& fileName, Verbosity verbosity = Verbosity::none) const;
 };

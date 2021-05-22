@@ -2,19 +2,16 @@
 
 SCENARIO("Inspecting a ray", "[Ray]")
 {
-    Vec3 x_direction(1.0, 0.0, 0.0);
-    Vec3 origin(0.0, 0.0, 0.0);
-
     GIVEN("a ray ") {
-        Ray ray(origin, x_direction);
+        Ray ray(Space3D::origin, Space3D::xAxis);
 
        THEN("we can access its origin and direction") {
-            REQUIRE(ray.origin() == origin);
-            REQUIRE(ray.direction() == x_direction);
+            REQUIRE(ray.origin() == Space3D::origin);
+            REQUIRE(ray.direction() == Space3D::xAxis);
         }
 
         THEN("we can evaluate it at any parameter") {
-            REQUIRE(ray.eval(1) == origin + x_direction);
+            REQUIRE(ray.eval(1) == Space3D::origin + Space3D::xAxis);
         }
     }
 
@@ -22,8 +19,8 @@ SCENARIO("Inspecting a ray", "[Ray]")
         Ray ray;
 
         THEN("it has a zero origin and a x unit vector") {
-            REQUIRE(ray.origin() == origin);
-            REQUIRE(ray.direction() == x_direction);
+            REQUIRE(ray.origin() == Space3D::origin);
+            REQUIRE(ray.direction() == Space3D::xAxis);
         }
     }
 }
