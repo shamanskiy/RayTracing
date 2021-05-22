@@ -1,23 +1,21 @@
-set(HEADERS_LIST
-  ${PROJECT_SOURCE_DIR}/include/LibRT/Equations.h
-  ${PROJECT_SOURCE_DIR}/include/LibRT/HitableObject.h
-  ${PROJECT_SOURCE_DIR}/include/LibRT/Ray.h
-  ${PROJECT_SOURCE_DIR}/include/LibRT/Vec3.h
-)
+file(GLOB_RECURSE include_files *.h)
+list(REMOVE_ITEM ${include_files} ${PROJECT_SOURCE_DIR}/lib/include/External/catch.hpp)
 
-set(SOURCES_LIST
-  ${PROJECT_SOURCE_DIR}/lib/Equations.cpp
-  ${PROJECT_SOURCE_DIR}/lib/HitableObject.cpp
-)
+file(GLOB_RECURSE source_files *.cpp)
 
 add_library(LibRT
-  ${SOURCES_LIST}
-  ${HEADERS_LIST}
+  ${include_files}
+  ${source_files}
 )
 
 target_compile_features(LibRT PUBLIC cxx_std_17)
 
 target_include_directories(LibRT
   PUBLIC
-    ${PROJECT_SOURCE_DIR}/include/LibRT
+    ${PROJECT_SOURCE_DIR}/lib/include
 )
+
+source_group(TREE ${PROJECT_SOURCE_DIR}/lib/include FILES 
+  ${include_files})
+source_group(TREE ${PROJECT_SOURCE_DIR}/lib/source FILES 
+  ${source_files})

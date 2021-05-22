@@ -1,18 +1,19 @@
-add_executable(unit_tests
-  main.cpp
-  catch_utils.hpp
-  EquationsTests.cpp
-  HitableObjectTests.cpp
-  RayTests.cpp
-  Vec3Tests.cpp
+file(GLOB_RECURSE test_files *.cpp)
+
+add_executable(UnitTests
+  TestsUtils.h
+  ${test_files}
 )
 
-target_link_libraries(unit_tests
+target_link_libraries(UnitTests
   LibRT
 )
 
-target_include_directories(unit_tests
+target_include_directories(UnitTests
   PRIVATE
-    ${PROJECT_SOURCE_DIR}/include/external
+    ${PROJECT_SOURCE_DIR}/lib/include/External
     ${PROJECT_SOURCE_DIR}/tests
 )
+
+source_group(TREE ${PROJECT_SOURCE_DIR}/tests FILES 
+  ${test_files} TestsUtils.h)
