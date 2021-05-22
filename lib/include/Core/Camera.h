@@ -16,6 +16,8 @@ struct CameraSettings {
     Vec3 viewHorizontalSpan{ 4.0, 0.0, 0.0 };
     Vec3 viewVerticalSpan{ 0.0, -2.0, 0.0 };
 
+    int maxRayReflections{ 1 };
+
     Verbosity verbosity{ Verbosity::none };
 };
 

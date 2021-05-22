@@ -19,8 +19,9 @@ public:
 	}
 
 	void addObject(std::unique_ptr<HitableObject>&& object) { m_objects.addObject(std::move(object)); }
-	Vec3 testRay(const Ray& ray) const;
+	Vec3 testRay(const Ray& ray, int maxReflectionDepth) const;
 
 private:
 	Vec3 hitSky(const Ray& ray) const;
+	Vec3 testRay(const Ray& ray, int maxReflections, int reflectionDepth) const;
 };

@@ -29,7 +29,7 @@ Vec3 Camera::computePixelColor(const Scene& scene, size_t row, size_t column) co
     {
         float uParam = float(column + Random::real01()) / m_settings.imagePixelWidth;
         float vParam = float(row + Random::real01()) / m_settings.imagePixelHeight;
-        pixelColor += scene.testRay(getRay(uParam, vParam));
+        pixelColor += scene.testRay(getRay(uParam, vParam), m_settings.maxRayReflections);
     }
     return pixelColor / m_settings.antialiasing;
 }
