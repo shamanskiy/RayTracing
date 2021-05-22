@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Objects/Scene.h"
+#include "Core/Scene.h"
 #include "Objects/Sphere.h"
 #include "Core/Camera.h"
 #include "Core/Image.h"
@@ -13,6 +13,7 @@ Scene makeScene()
     Scene scene;
     scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f));
     scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f));
+    scene.setSkyGradient(Vec3(1.0, 1.0, 1.0), Vec3(0.5, 0.7, 1.0));
     return scene;
 }
 

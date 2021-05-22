@@ -2,7 +2,7 @@
 
 #include <vector>
 
-class Scene : public HitableObject {
+class HitableCollection : public HitableObject {
 	std::vector<std::unique_ptr<HitableObject>> m_objects;
 
 public:

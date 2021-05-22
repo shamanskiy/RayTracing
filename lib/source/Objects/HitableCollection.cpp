@@ -1,4 +1,4 @@
-#include "Objects/Scene.h"
+#include "Objects/HitableCollection.h"
 
 namespace {
     bool closer(const HitRecord& hit, const HitRecord& closestHit) {
@@ -6,7 +6,7 @@ namespace {
     }
 }
 
-HitRecord Scene::testRay(const Ray& ray, const Interval& intervalOfInterest) const
+HitRecord HitableCollection::testRay(const Ray& ray, const Interval& intervalOfInterest) const
 {
     auto closestHit = HitRecord::farAway();
     bool hitAnything = false;
