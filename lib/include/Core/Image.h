@@ -30,7 +30,6 @@ public:
 		return m_pixels.at(row * m_width + col);
 	}
 
-	
-
 	void saveAsPPM(std::ostream& output) const;
+	void save(const std::string& fileName) const;
 };

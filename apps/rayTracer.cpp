@@ -11,6 +11,7 @@
 #include "Objects/Scene.h"
 #include "Objects/Sphere.h"
 #include "Utils/ProgressBar.h"
+#include "Utils/Timer.h"
 
 using namespace std;
 
@@ -40,18 +41,10 @@ Vec3 color(const Ray& ray, const Scene& scene)
     return lerp(white, lightBlue, t);
 }
 
-void reportElapsedTime(ostream& output, chrono::steady_clock::time_point begin)
-{
-    auto end = std::chrono::high_resolution_clock::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    output.precision(3);
-    output << "Complete in " << elapsed.count() * 1e-9 << " seconds\n";
-}
-
 int main() {
     srand((unsigned)time(0));
-    int width = 200;
-    int height = 100;
+    int width = 2000;
+    int height = 1000;
     int superSampling = 100;
 
     Camera camera;
@@ -61,7 +54,7 @@ int main() {
     scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f));
 
   
-    auto begin = std::chrono::high_resolution_clock::now();
+    Timer timer;
     std::cout << "Rendering...\n";
     ProgressBar bar(height, 35);
     for (int i = 0; i < height; i++)
@@ -81,38 +74,17 @@ int main() {
             image(i, j) = col / superSampling;
         }
     }
-    reportElapsedTime(cout, begin);
+    std::cout << timer.reportElapsedTime();
 
 
 
     std::string outputFileName("diffuse_material.ppm");
     std::cout << "Saving...\n";
-    begin = std::chrono::high_resolution_clock::now();
+    timer.start();
+
     image.save(outputFileName);
-    reportElapsedTime(cout, begin);
+
+    std::cout << timer.reportElapsedTime();
     std::cout << "Image saved to " << outputFileName << "\n";
-
-
-
-
-    ofstream imageFile(outputFileName);
-    imageFile << "P3\n" << width << " " << height << "\n255\n";
-    bar.reset();
-    for (int i = 0; i < height; i++)
-    {
-        bar.displayNext(std::cout);
-
-        for (int j = 0; j < width; j++)
-        {
-            auto col = image(i, j);
-            int ir = int(255.99 * sqrt(col.r()));
-            int ig = int(255.99 * sqrt(col.g()));
-            int ib = int(255.99 * sqrt(col.b()));
-
-            imageFile << ir << " " << ig << " " << ib << "\n";
-        }
-    }
-
-    imageFile.close();
 
 }

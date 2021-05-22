@@ -16,7 +16,7 @@ SCENARIO("Image tests", "[Image]")
 		}
 
 		THEN("by default its pixels are all black") {
-			REQUIRE(image(0,0) == Vec3());
+			REQUIRE(image(0, 0) == Vec3());
 			REQUIRE(image(0, 1) == Vec3());
 		}
 
