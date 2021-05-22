@@ -4,6 +4,6 @@
 
 SCENARIO("Camera tests", "[Camera]")
 {
-    Camera camera;
+    Camera camera(CameraSettings);
     REQUIRE(true);
 }

@@ -25,7 +25,7 @@ public:
         auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - m_start);
         std::ostringstream oss;
         oss.precision(3);
-        oss << "Complete in " << elapsed.count() * 1e-9 << " seconds\n";
+        oss << "Complete in " << elapsed.count() * 1e-9 << " seconds";
         return oss.str();
     }
 };

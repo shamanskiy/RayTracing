@@ -16,49 +16,50 @@ Scene makeScene()
     return scene;
 }
 
-ImageSettings getImageSettings()
+CameraSettings getCameraSettings()
 {
-    ImageSettings settings;
-    settings.width = 400;
-    settings.height = 200;
+    CameraSettings settings;
+    settings.imagePixelWidth = 400;
+    settings.imagePixelHeight = 200;
     settings.antialiasing = 100;
+
+    settings.cameraPosition = Vec3(0.0, 0.0, 0.0);
+    settings.viewUpperLeftCorner = Vec3(-2.0, 1.0, -1.0);
+    settings.viewHorizontalSpan = Vec3(4.0, 0.0, 0.0);
+    settings.viewVerticalSpan = Vec3(0.0, -2.0, 0.0);
+
+    settings.verbosity = Verbosity::all;
     return settings;
 }
 
-Camera makeCamera()
-{
-    return Camera();
-}
-
-Image renderScene(const Camera& camera, const ImageSettings& settings, const Scene& scene)
+Image renderScene(const Camera& camera, const Scene& scene)
 {
     cout << "Rendering...\n";
     Timer timer;
 
-    Image image = camera.render(scene, settings, Verbosity::all);
+    Image image = camera.render(scene);
 
-    cout << timer.reportElapsedTime();
+    cout << timer.reportElapsedTime() << "\n";
     return image;
 }
 
 void saveImage(const Image& image)
 {
-    string outputFileName("diffuse_material.ppm");
     cout << "Saving...\n";
     Timer timer;
 
+    string outputFileName("diffuse_material.ppm");
     image.save(outputFileName, Verbosity::all);
 
-    cout << timer.reportElapsedTime();
+    cout << timer.reportElapsedTime() << "\n";
     cout << "Image saved to " << outputFileName << "\n";
 }
 
 int main() {
     auto scene = makeScene();
-    auto settings = getImageSettings();
-    auto camera = makeCamera();
+    Camera camera(getCameraSettings());
 
-    auto image = renderScene(camera, settings, scene);
+    auto image = renderScene(camera, scene);
 
     saveImage(image);
 }

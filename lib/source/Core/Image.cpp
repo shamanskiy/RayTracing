@@ -21,7 +21,7 @@ void Image::saveAsPPM(std::ostream& output, Verbosity verbosity) const
 {
     output << "P3\n" << m_width << " " << m_height << "\n255\n";
 
-    ProgressBar bar(m_height, 35);
+    ProgressBar bar(m_height);
     for (size_t i = 0; i < m_height; i++)
     {
         if (verbosity == Verbosity::all)

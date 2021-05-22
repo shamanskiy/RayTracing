@@ -11,7 +11,7 @@ class ProgressBar
     int m_totalSegments;
     
 public:
-    ProgressBar(int totalSteps, int totalSegments)
+    ProgressBar(int totalSteps, int totalSegments = 35)
     : m_currentStep(0), m_totalSteps(totalSteps), m_completeSegments(-1), m_totalSegments(totalSegments) {}
     
     void displayNext(std::ostream & output);

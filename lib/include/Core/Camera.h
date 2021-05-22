@@ -6,29 +6,27 @@
 
 class Scene;
 
-struct ImageSettings {
-    int width;
-    int height;
-    int antialiasing;
+struct CameraSettings {
+    size_t imagePixelWidth{ 100 };
+    size_t imagePixelHeight{ 200 };
+    int antialiasing{ 100 };
+
+    Vec3 cameraPosition{ 0.0, 0.0, 0.0 };
+    Vec3 viewUpperLeftCorner{ -2.0, 1.0, -1.0 };
+    Vec3 viewHorizontalSpan{ 4.0, 0.0, 0.0 };
+    Vec3 viewVerticalSpan{ 0.0, -2.0, 0.0 };
+
+    Verbosity verbosity{ Verbosity::none };
 };
 
 class Camera {
-    Vec3 m_origin;
-    Vec3 m_upperLeftCorner;
-    Vec3 m_horizontalSpan;
-    Vec3 m_verticalSpan;
+    CameraSettings m_settings;
 
 public:
-    Camera() : m_origin(Vec3(0.0, 0.0, 0.0)),
-    m_upperLeftCorner(Vec3(-2.0, 1.0, -1.0)),
-    m_horizontalSpan(Vec3(4.0, 0.0, 0.0)),
-    m_verticalSpan(Vec3(0.0, -2.0, 0.0)) {}
+    Camera(const CameraSettings& settings) : m_settings(settings) {}
 
-    Ray getRay(float u, float v) const
-    { 
-        return Ray(m_origin, m_upperLeftCorner + u * m_horizontalSpan + v * m_verticalSpan - m_origin);
-    }
-
-    Image render(const Scene& scene, const ImageSettings& settings, Verbosity verbosity = Verbosity::none) const;
+    Ray getRay(float u, float v) const;
+    Image render(const Scene& scene) const;
+    Vec3 computePixelColor(const Scene& scene, size_t i, size_t j) const;
 };
 
