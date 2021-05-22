@@ -1,7 +1,7 @@
 #include "Core/Camera.h"
 #include "Objects/Scene.h"
 #include "Utils/ProgressBar.h"
-
+#include "Core/Random.h"
 #include <iostream>
 
 namespace
@@ -12,19 +12,11 @@ namespace
         return 0.5 * (unitDirection.y() + 1.0);
     }
 
-    Vec3 randomUnitSphere() {
-        Vec3 p;
-        do {
-            p = 2.0 * Vec3((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX) - Vec3(1.0, 1.0, 1.0);
-        } while (p.length_sq() >= 1.0);
-        return p;
-    }
-
     Vec3 color(const Ray& ray, const Scene& scene)
     {
         auto [t, point, normal] = scene.testRay(ray, Interval(0.001, Interval::limit_max()));
         if (t > 0.0)
-            return 0.5 * color(Ray(point, normal + randomUnitSphere()), scene);
+            return 0.5 * color(Ray(point, normal + Rand::vecUnitSphere()), scene);
 
         t = map_y_to_zero_one(ray.direction());
         Vec3 white(1.0, 1.0, 1.0);
@@ -47,8 +39,8 @@ Image Camera::render(const Scene& scene, const ImageSettings& settings, Verbosit
             Vec3 col;
             for (int s = 0; s < settings.antialiasing; s++)
             {
-                float u = float(j + (float)rand() / RAND_MAX) / settings.width;
-                float v = float(i + (float)rand() / RAND_MAX) / settings.height;
+                float u = float(j + Rand::real01()) / settings.width;
+                float v = float(i + Rand::real01()) / settings.height;
                 col += color(getRay(u, v), scene);
             }
 

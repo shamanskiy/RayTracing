@@ -1,19 +1,22 @@
 #pragma once
 
-class QuadraticEquation {
-	float m_a, m_b, m_c;
-	float m_discriminant;
-	float m_sqrtDiscriminant;
-	float m_leftSolution;
-	float m_rightSolution;
+#include "Core/SmallBaseClasses.h"
 
-public:
-	QuadraticEquation(float a, float b, float c);
+namespace Rand
+{
+    float real01() {
+        return (float)rand() / RAND_MAX; }
 
-	int numberOfSolutions() const;
-	float leftSolution() const;
-	float rightSolution() const;
+    Vec3 vec01() {
+        return Vec3(real01(), real01(), real01());
+    }
 
-private:
-	void solve();
-};
+    Vec3 vecUnitSphere() {
+        // rejection algorithm
+        Vec3 p;
+        do {
+            p = 2.0 * vec01() - Vec3(1.0, 1.0, 1.0);
+        } while (p.length_sq() >= 1.0);
+        return p;
+    }
+}

@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "Core/Camera.h"
-#include "Core/Image.h"
 #include "Objects/Scene.h"
 #include "Objects/Sphere.h"
+#include "Core/Camera.h"
+#include "Core/Image.h"
 #include "Utils/Timer.h"
 
 using namespace std;
@@ -32,25 +32,25 @@ Camera makeCamera()
 
 Image renderScene(const Camera& camera, const ImageSettings& settings, const Scene& scene)
 {
-    std::cout << "Rendering...\n";
+    cout << "Rendering...\n";
     Timer timer;
 
     Image image = camera.render(scene, settings, Verbosity::all);
 
-    std::cout << timer.reportElapsedTime();
+    cout << timer.reportElapsedTime();
     return image;
 }
 
 void saveImage(const Image& image)
 {
-    std::string outputFileName("diffuse_material.ppm");
-    std::cout << "Saving...\n";
+    string outputFileName("diffuse_material.ppm");
+    cout << "Saving...\n";
     Timer timer;
 
     image.save(outputFileName, Verbosity::all);
 
-    std::cout << timer.reportElapsedTime();
-    std::cout << "Image saved to " << outputFileName << "\n";
+    cout << timer.reportElapsedTime();
+    cout << "Image saved to " << outputFileName << "\n";
 }
 
 int main() {
