@@ -4,6 +4,7 @@
 #include <ostream>
 
 #include "Core/SmallBaseClasses.h"
+#include "Utils/UtilityEnums.h"
 
 class Image
 {
@@ -30,6 +31,6 @@ public:
 		return m_pixels.at(row * m_width + col);
 	}
 
-	void saveAsPPM(std::ostream& output) const;
-	void save(const std::string& fileName) const;
+	void saveAsPPM(std::ostream& output, Verbosity verbosity = Verbosity::none) const;
+	void save(const std::string& fileName, Verbosity verbosity = Verbosity::none) const;
 };

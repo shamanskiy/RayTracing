@@ -41,10 +41,12 @@ Vec3 color(const Ray& ray, const Scene& scene)
     return lerp(white, lightBlue, t);
 }
 
+void saveImage(const Image& image);
+
 int main() {
     srand((unsigned)time(0));
-    int width = 2000;
-    int height = 1000;
+    int width = 200;
+    int height = 100;
     int superSampling = 100;
 
     Camera camera;
@@ -76,15 +78,17 @@ int main() {
     }
     std::cout << timer.reportElapsedTime();
 
+    saveImage(image);
+}
 
-
+void saveImage(const Image& image)
+{
     std::string outputFileName("diffuse_material.ppm");
     std::cout << "Saving...\n";
-    timer.start();
+    Timer timer;
 
-    image.save(outputFileName);
+    image.save(outputFileName, Verbosity::all);
 
     std::cout << timer.reportElapsedTime();
     std::cout << "Image saved to " << outputFileName << "\n";
-
 }

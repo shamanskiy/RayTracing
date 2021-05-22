@@ -1,6 +1,8 @@
 #include "Core/Image.h"
 
 #include <fstream>
+#include "Utils/ProgressBar.h"
+#include <iostream>
 
 namespace
 {
@@ -8,17 +10,22 @@ namespace
     float gammaCorrection(float x) { return sqrt(x); }
 }
 
-void Image::save(const std::string& fileName) const
+void Image::save(const std::string& fileName, Verbosity verbosity) const
 {
     std::ofstream file(fileName);
-    saveAsPPM(file);
+    saveAsPPM(file, verbosity);
     file.close();
 }
 
-void Image::saveAsPPM(std::ostream& output) const
+void Image::saveAsPPM(std::ostream& output, Verbosity verbosity) const
 {
     output << "P3\n" << m_width << " " << m_height << "\n255\n";
+
+    ProgressBar bar(m_height, 35);
     for (size_t i = 0; i < m_height; i++)
+    {
+        if (verbosity == Verbosity::all)
+            bar.displayNext(std::cout);
         for (size_t j = 0; j < m_width; j++)
         {
             auto color = (*this)(i, j);
@@ -28,4 +35,5 @@ void Image::saveAsPPM(std::ostream& output) const
 
             output << red << " " << green << " " << blue << "\n";
         }
+    }
 }
