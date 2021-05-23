@@ -13,7 +13,7 @@ Vec3 Scene::testRay(const Ray& ray, int maxReflectionDepth, int reflectionDepth)
     auto [t, point, normal] = m_objects.testRay(ray, Interval(0.001, Interval::limit_max()));
     if (t > 0.0)
         if (reflectionDepth < maxReflectionDepth)
-            return 0.5 * testRay(Ray(point, normal + Random::vecUnitSphere()),
+            return 0.5 * testRay(Ray(point, normal + Random::get()->vecUnitSphere()),
                 maxReflectionDepth, reflectionDepth + 1);
         else
             return Color::black;

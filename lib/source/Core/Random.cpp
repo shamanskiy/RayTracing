@@ -1,14 +1,36 @@
 #include "Core/Random.h"
 
+#include <time.h> 
+
+Random::Random() : m_enabled(true) { srand(time(NULL)); }
+
+Random* Random::random_instance = nullptr;
+
+Random* Random::get()
+{
+    if (random_instance == nullptr)
+        random_instance = new Random();
+    return random_instance;
+}
+
 float Random::real01() {
-    return (float)rand() / RAND_MAX;
+    if (m_enabled)
+        return (float)rand() / (RAND_MAX + 1);
+    else
+        return 0.0;
 }
 
 Vec3 Random::vec01() {
-    return Vec3(Random::real01(), Random::real01(), Random::real01());
+    if (m_enabled)
+        return Vec3(Random::real01(), Random::real01(), Random::real01());
+    else
+        return Vec3();
 }
 
 Vec3 Random::vecUnitSphere() {
+    if (!m_enabled)
+        return Vec3();
+
     // rejection algorithm
     Vec3 point;
     do {
