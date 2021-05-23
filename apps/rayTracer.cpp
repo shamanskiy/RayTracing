@@ -28,7 +28,7 @@ CameraSettings getCameraSettings()
     settings.viewHorizontalSpan = Vec3(4.0, 0.0, 0.0);
     settings.viewVerticalSpan = Vec3(0.0, -2.0, 0.0);
 
-    settings.maxRayReflections = 0;
+    settings.maxRayReflections = 10;
 
     settings.verbosity = Verbosity::all;
     return settings;

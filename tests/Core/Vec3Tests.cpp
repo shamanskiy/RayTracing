@@ -3,7 +3,6 @@
 #include "TestsUtils.h"
 
 using namespace std;
-using namespace Catch::literals;
 
 SCENARIO("Inspecting a vector", "[Vec3]")
 {

@@ -2,8 +2,16 @@
 
 #include "Core/SmallBaseClasses.h"
 
+struct Reflection
+{
+	bool happened;
+	Ray ray;
+	Vec3 attenuation;
+};
+
 class Material
 {
-	virtual std::tuple<Ray, Vec3> reflectRay(const Ray& ray, const HitRecord& hit) const = 0;
+public:
+	virtual Reflection reflectRay(const Ray& ray, const HitRecord& hit) const = 0;
 	virtual ~Material() {}
 };

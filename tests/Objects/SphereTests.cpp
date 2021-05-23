@@ -47,3 +47,10 @@ SCENARIO("Sphere hit tests", "[Sphere]")
         }
     }
 }
+
+TEST_CASE("Sphere without material", "[Sphere]")
+{
+    Sphere sphere(Space3D::origin, 1.0);
+    REQUIRE(sphere.material() == nullptr);
+}
+
