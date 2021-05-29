@@ -1,10 +1,10 @@
 #include "TestsUtils.h"
 
-#include "Materials/Metal.h"
+#include "Materials/Reflective.h"
 
-SCENARIO("Metal material tests", "[Metal]") {
-	GIVEN("a metal material") {
-		Metal material(Color::gold, 0.0);
+SCENARIO("Reflective material tests", "[Metal]") {
+	GIVEN("a reflective material") {
+		Reflective material(Color::gold, 0.0);
 		Vec3 hitPoint(0.0, 0.0, 0.0);
 		Vec3 hitNormal(0.0, 0.0, 1.0);
 		HitRecord hit{ 0.0, hitPoint, hitNormal, &material };
