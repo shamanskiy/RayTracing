@@ -13,11 +13,14 @@ using namespace std;
 Scene makeScene()
 {
     Scene scene;
-    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f, make_unique<Diffusive>(Color::red)));
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f, make_unique<Reflective>(Color::gold,0.1f)));
     scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, 1.0), 0.5f, make_unique<Diffusive>(Color::red)));
     scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f,make_unique<Diffusive>(Color::mediumGray)));
-    scene.addObject(make_unique<Sphere>(Vec3(1.0, 0.0, -1.0), 0.5f, make_unique<Transparent>(Color::white,1.0f)));
+    scene.addObject(make_unique<Sphere>(Vec3(1.0, 0.0, -1.0), 0.5f, make_unique<Transparent>(Color::white,1.5f)));
+    scene.addObject(make_unique<Sphere>(Vec3(1.0, 0.0, -1.0), -0.4f, make_unique<Transparent>(Color::white, 1.5f)));
     scene.addObject(make_unique<Sphere>(Vec3(-1.0, 0.0, -1.0), 0.5f, make_unique<Reflective>(Color::lightGray,0.1f)));
+    scene.addObject(make_unique<Sphere>(Vec3(2.0, 0.0, -2.0), 0.5f, make_unique<Diffusive>(Color::red)));
+
     scene.setSkyGradient(Color::white, Color::lightblue);
     return scene;
 }
@@ -25,9 +28,9 @@ Scene makeScene()
 CameraSettings getCameraSettings()
 {
     CameraSettings settings;
-    settings.imagePixelWidth = 400;
-    settings.imagePixelHeight = 200;
-    settings.antialiasing = 100;
+    settings.imagePixelWidth = 1500;
+    settings.imagePixelHeight = 750;
+    settings.antialiasing = 10;
 
     settings.cameraPosition = Vec3(0.0, 0.0, 0.0);
     settings.viewUpperLeftCorner = Vec3(-2.0, 1.0, -1.0);

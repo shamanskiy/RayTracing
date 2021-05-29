@@ -6,6 +6,11 @@ std::optional<Reflection> Reflective::reflectRay(const Ray& ray, const HitRecord
 {
 	Vec3 reflectedDirection = reflect(ray.direction(), hit.normal) + 
 		Random::get()->vecUnitSphere() * m_fuzziness;
-	Ray reflectedRay(hit.point, reflectedDirection);
-	return Reflection{ reflectedRay, m_color };
+	if (dot(reflectedDirection, hit.normal) > 0)
+	{
+		Ray reflectedRay(hit.point, reflectedDirection);
+		return Reflection{ reflectedRay, m_color };
+	}
+	else
+		return std::nullopt;
 }
