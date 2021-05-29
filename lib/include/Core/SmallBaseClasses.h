@@ -153,6 +153,11 @@ inline Vec3 lerp(const Vec3& vecA, const Vec3& vecB, float t)
 	return (1 - t) * vecA + t * vecB;
 }
 
+inline Vec3 reflect(const Vec3& vec, const Vec3& normal)
+{
+	return vec - 2 * dot(vec, normal) * normal;
+}
+
 class Ray {
 private:
 	Vec3 m_origin;
@@ -200,8 +205,10 @@ namespace Color
 	const Vec3 blue(0.0, 0.0, 1.0);
 	const Vec3 black(0.0, 0.0, 0.0);
 	const Vec3 lightblue(0.5, 0.7, 1.0);
-	const Vec3 gray(0.5, 0.5, 0.5);
-}
+	const Vec3 mediumGray(0.5, 0.5, 0.5);
+	const Vec3 gold(0.8, 0.6, 0.2);
+	const Vec3 lightGray(0.8, 0.8, 0.8);
+};
 
 namespace Space3D
 {

@@ -4,6 +4,8 @@
 #include "Objects/Sphere.h"
 #include "Materials/Diffusive.h"
 
+using namespace std;
+
 SCENARIO("Empty scene: ray hits the sky", "[Scene]")
 {
 	GIVEN("a scene with red-blue sky") {

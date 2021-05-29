@@ -227,3 +227,34 @@ SCENARIO("Vector linear interpolation", "[Vec3]")
                 REQUIRE(lerp(vecA, vecB, 1.0) == Vec3(0.0, 1.0, 0.0));
     }
 }
+
+TEST_CASE("Vector reflection 1", "[Vec3]")
+{
+    Vec3 normal(0.0, 0.0, 1.0);
+    Vec3 vec(3.0, 0.0, 4.0);
+
+    Vec3 reflected = reflect(vec, normal);
+
+    REQUIRE(reflected == Vec3(3.0, 0.0, -4.0));
+}
+
+TEST_CASE("Vector reflection 2", "[Vec3]")
+{
+    Vec3 normal(0.0, 0.0, 1.0);
+    Vec3 vec(0.0, 0.0, 4.0);
+
+    Vec3 reflected = reflect(vec, normal);
+
+    REQUIRE(reflected == Vec3(0.0, 0.0, -4.0));
+}
+
+
+TEST_CASE("Vector reflection 3", "[Vec3]")
+{
+    Vec3 normal(0.0, 0.0, 1.0);
+    Vec3 vec(0.0, 0.0, 0.0);
+
+    Vec3 reflected = reflect(vec, normal);
+
+    REQUIRE(reflected == Vec3(0.0, 0.0, 0.0));
+}
