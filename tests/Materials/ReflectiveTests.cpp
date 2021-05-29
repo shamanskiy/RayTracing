@@ -2,7 +2,7 @@
 
 #include "Materials/Reflective.h"
 
-SCENARIO("Reflective material tests", "[Metal]") {
+SCENARIO("Reflective material tests", "[Reflective]") {
 	GIVEN("a reflective material") {
 		Reflective material(Color::gold, 0.0);
 		Vec3 hitPoint(0.0, 0.0, 0.0);
@@ -12,7 +12,7 @@ SCENARIO("Reflective material tests", "[Metal]") {
 		WHEN("we reflect a ray") {
 			Ray ray(Vec3(3.0, 0.0, 4.0), Vec3(-3.0, 0.0, -4.0));
 
-			auto reflection = material.reflectRay(ray, hit);
+			auto reflection = material.processRay(ray, hit);
 			
 			THEN("") {
 				REQUIRE(reflection);

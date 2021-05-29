@@ -16,7 +16,7 @@ Vec3 Scene::testRay(const Ray& ray, int maxReflectionDepth, int reflectionDepth)
     {
         if (reflectionDepth < maxReflectionDepth)
         {
-            auto reflection = hit->material->reflectRay(ray, *hit);
+            auto reflection = hit->material->processRay(ray, *hit);
             if (reflection)
                 return reflection->attenuation * testRay(reflection->ray, maxReflectionDepth, reflectionDepth + 1);
         }

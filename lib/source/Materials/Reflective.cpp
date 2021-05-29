@@ -2,8 +2,10 @@
 
 #include "Core/Random.h"
 
-std::optional<Reflection> Reflective::reflectRay(const Ray& ray, const HitRecord& hit) const
+std::optional<MaterialEffect> Reflective::processRay(const Ray& ray, const HitRecord& hit) const
 {
-	Ray reflectedRay(hit.point, reflect(ray.direction(),hit.normal) + Random::get()->vecUnitSphere()*m_fuzziness);
-	return Reflection{ reflectedRay, m_color };
+	Vec3 reflectedDirection = reflect(ray.direction(), hit.normal) + 
+		Random::get()->vecUnitSphere() * m_fuzziness;
+	Ray reflectedRay(hit.point, reflectedDirection);
+	return MaterialEffect{ reflectedRay, m_color };
 }

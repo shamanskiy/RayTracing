@@ -2,24 +2,16 @@
 
 #include "Materials/Transparent.h"
 
-SCENARIO("Transparent material tests", "[Metal]") {
-	GIVEN("a transparent material") {
-		Transparent material(Color::white, 1.0);
-/*		Vec3 hitPoint(0.0, 0.0, 0.0);
-		Vec3 hitNormal(0.0, 0.0, 1.0);
-		HitRecord hit{ 0.0, hitPoint, hitNormal, &material };
+TEST_CASE("Transparent material: test 1", "[Transparent]") {
+	Transparent material(Color::white, 1.0);
+	Vec3 hitPoint(0.0, 0.0, 0.0);
+	Vec3 hitNormal(0.0, 0.0, 1.0);
+	HitRecord hit{ 0.0, hitPoint, hitNormal, &material };
 
-		WHEN("we reflect a ray") {
-			Ray ray(Vec3(3.0, 0.0, 4.0), Vec3(-3.0, 0.0, -4.0));
+	Ray ray(Vec3(3.0, 0.0, 3.0), Vec3(-3.0, 0.0, -3.0));
+	auto reflection = material.processRay(ray, hit);
 
-			auto reflection = material.reflectRay(ray, hit);
-
-			THEN("") {
-				REQUIRE(reflection);
-				REQUIRE(reflection->ray == Ray(hitPoint, Vec3(-3.0, 0.0, 4.0)));
-				REQUIRE(reflection->attenuation == Color::gold);
-			}
-		}*/
-
-	}
+	REQUIRE(reflection);
+	REQUIRE(reflection->ray == Ray(hitPoint, Vec3(-3.0, 0.0, -3.0)));
+	REQUIRE(reflection->attenuation == Color::white);
 }
