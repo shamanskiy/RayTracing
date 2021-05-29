@@ -1,12 +1,18 @@
 #include "Objects/Sphere.h"
 #include "Core/QuadraticEquation.h"
 
-HitRecord Sphere::testRay(const Ray& ray, const Interval& intervalOfInterest) const
+Sphere::Sphere(Vec3 center, float radius, std::unique_ptr<Material>&& material) 
+    : m_center(center), 
+      m_radius(radius),
+      m_material(std::move(material))
+{}
+
+std::optional<HitRecord> Sphere::testRay(const Ray& ray, const Interval& intervalOfInterest) const
 {
     auto [numSolutions, leftSolution, rightSolution] = solveHitEquation(ray);
 
     if (numSolutions == 0)
-        return HitRecord::miss();
+        return std::nullopt;
 
     if (intervalOfInterest.includes(leftSolution))
         return makeHitRecord(leftSolution, ray);
@@ -14,14 +20,14 @@ HitRecord Sphere::testRay(const Ray& ray, const Interval& intervalOfInterest) co
     if (intervalOfInterest.includes(rightSolution))
         return makeHitRecord(rightSolution, ray);
 
-    return HitRecord::miss();
+    return std::nullopt;
 }
 
 HitRecord Sphere::makeHitRecord(float t, const Ray& ray) const
 {
     Vec3 hitPoint = ray.eval(t);
     Vec3 normal = (hitPoint - m_center) / m_radius;
-    return HitRecord{ t, hitPoint, normal };
+    return HitRecord{ t, hitPoint, normal, m_material.get()};
 }
 
 std::tuple<int, float, float> Sphere::solveHitEquation(const Ray& ray) const
@@ -37,5 +43,7 @@ std::tuple<int, float, float> Sphere::solveHitEquation(const Ray& ray) const
     return std::tuple{ equation.numberOfSolutions(), equation.leftSolution(), equation.rightSolution() };
 }
 
-
-
+const Material* Sphere::material() const
+{
+    return m_material.get();
+}
