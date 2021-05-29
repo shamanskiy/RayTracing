@@ -2,6 +2,7 @@
 
 #include "Core/Scene.h"
 #include "Objects/Sphere.h"
+#include "Materials/Diffusive.h"
 #include "Core/Camera.h"
 #include "Utils/Timer.h"
 
@@ -10,8 +11,8 @@ using namespace std;
 Scene makeScene()
 {
     Scene scene;
-    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f));
-    scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f));
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f, make_unique<Diffusive>(Color::red)));
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f,make_unique<Diffusive>(Color::gray)));
     scene.setSkyGradient(Color::white, Color::lightblue);
     return scene;
 }

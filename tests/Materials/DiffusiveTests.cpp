@@ -8,7 +8,7 @@ SCENARIO("Diffusive material tests", "[Diffusive]") {
 		Diffusive material(Color::red);
 		Vec3 hitPoint(1.0, 1.0, 1.0);
 		Vec3 hitNormal(1.0, 0.0, 0.0);
-		HitRecord hit{0.0, hitPoint, hitNormal };
+		HitRecord hit{0.0, hitPoint, hitNormal, &material};
 
 		WHEN("we reflect any ray") {
 			Ray ray;
@@ -17,9 +17,9 @@ SCENARIO("Diffusive material tests", "[Diffusive]") {
 			Random::get()->enable();
 
 			THEN("the result doesn't depend on the ray") {
-				REQUIRE(reflection.happened == true);
-				REQUIRE(reflection.ray == Ray(hitPoint,hitNormal));
-				REQUIRE(reflection.attenuation == Color::red);
+				REQUIRE(reflection);
+				REQUIRE(reflection->ray == Ray(hitPoint,hitNormal));
+				REQUIRE(reflection->attenuation == Color::red);
 			}
 		}
 
@@ -30,9 +30,9 @@ SCENARIO("Diffusive material tests", "[Diffusive]") {
 			Random::get()->enable();
 
 			THEN("we get the same result") {
-				REQUIRE(reflection.happened == true);
-				REQUIRE(reflection.ray == Ray(hitPoint, hitNormal));
-				REQUIRE(reflection.attenuation == Color::red);
+				REQUIRE(reflection);
+				REQUIRE(reflection->ray == Ray(hitPoint, hitNormal));
+				REQUIRE(reflection->attenuation == Color::red);
 			}
 		}
 	}

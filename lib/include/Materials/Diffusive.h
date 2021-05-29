@@ -9,5 +9,5 @@ class Diffusive : public Material
 public:
 	Diffusive(const Vec3& color) : m_color(color) {}
 
-	Reflection reflectRay(const Ray& ray, const HitRecord& hit) const override;
+	std::optional<Reflection> reflectRay(const Ray& ray, const HitRecord& hit) const override;
 };

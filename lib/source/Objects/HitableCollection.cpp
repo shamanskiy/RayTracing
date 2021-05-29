@@ -1,25 +1,28 @@
 #include "Objects/HitableCollection.h"
+#include "Objects/HitableObject.h"
 
 namespace {
-    bool closer(const HitRecord& hit, const HitRecord& closestHit) {
-        return hit.t < closestHit.t;
+    bool better(const std::optional<HitRecord>& hit, const std::optional<HitRecord>& closestHit,
+        const Interval& intervalOfInterest)
+    {
+        return !closestHit || hit && intervalOfInterest.includes(hit->t) && hit->t < closestHit->t;
     }
 }
 
-HitRecord HitableCollection::testRay(const Ray& ray, const Interval& intervalOfInterest) const
+std::optional<HitRecord> HitableCollection::testRay(const Ray& ray, const Interval& intervalOfInterest) const
 {
-    auto closestHit = HitRecord::farAway();
-    bool hitAnything = false;
-
+    std::optional<HitRecord> closestHit;
     for (auto& object : m_objects)
     {
         auto hit = object->testRay(ray, intervalOfInterest);
-        if (intervalOfInterest.includes(hit.t) && closer(hit, closestHit))
-        {
+        if (better(hit, closestHit,intervalOfInterest))
             closestHit = hit;
-            hitAnything = true;
-        }
     }
+    return closestHit;
+}
 
-    return hitAnything ? closestHit : HitRecord::miss();
+
+void HitableCollection::addObject(std::unique_ptr<HitableObject>&& object)
+{
+    m_objects.push_back(std::move(object)); 
 }

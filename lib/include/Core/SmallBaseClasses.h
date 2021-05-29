@@ -183,20 +183,13 @@ public:
 	bool includes(float t) const { return t >= m_min && t <= m_max; }
 };
 
+class Material;
+
 struct HitRecord {
 	float t;
 	Vec3 point;
 	Vec3 normal;
-
-	HitRecord(float t, Vec3 point, Vec3 normal) : t(t), point(point), normal(normal) {}
-
-	static HitRecord miss() {
-		return HitRecord{ -1.0, Vec3(), Vec3() };
-	}
-
-	static HitRecord farAway() {
-		return HitRecord{ Interval::limit_max() , Vec3(), Vec3() };
-	}
+	const Material* material;
 };
 
 namespace Color
@@ -207,6 +200,7 @@ namespace Color
 	const Vec3 blue(0.0, 0.0, 1.0);
 	const Vec3 black(0.0, 0.0, 0.0);
 	const Vec3 lightblue(0.5, 0.7, 1.0);
+	const Vec3 gray(0.5, 0.5, 0.5);
 }
 
 namespace Space3D

@@ -10,8 +10,9 @@ class Sphere : public HitableObject {
 public:
 	Sphere(Vec3 center, float radius, std::unique_ptr<Material>&& material = nullptr); 
 
-	HitRecord testRay(const Ray& ray, const Interval& intervalOfInterest = Interval()) const override;
-	const Material* material() const { return m_material.get(); }
+	std::optional<HitRecord> testRay(const Ray& ray, const Interval& intervalOfInterest = Interval()) const override;
+
+	const Material* material() const;
 
 private:
 	std::tuple<int, float, float> solveHitEquation(const Ray& ray) const;
