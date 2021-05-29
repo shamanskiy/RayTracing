@@ -4,7 +4,7 @@
 
 #include "Core/SmallBaseClasses.h"
 
-struct MaterialEffect
+struct Reflection
 {
 	Ray ray;
 	Vec3 attenuation;
@@ -13,6 +13,6 @@ struct MaterialEffect
 class Material
 {
 public:
-	virtual std::optional<MaterialEffect> processRay(const Ray& ray, const HitRecord& hit) const = 0;
+	virtual std::optional<Reflection> reflectRay(const Ray& ray, const HitRecord& hit) const = 0;
 	virtual ~Material() {}
 };

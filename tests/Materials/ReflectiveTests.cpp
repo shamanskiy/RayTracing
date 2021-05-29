@@ -12,7 +12,7 @@ SCENARIO("Reflective material tests", "[Reflective]") {
 		WHEN("we reflect a ray") {
 			Ray ray(Vec3(3.0, 0.0, 4.0), Vec3(-3.0, 0.0, -4.0));
 
-			auto reflection = material.processRay(ray, hit);
+			auto reflection = material.reflectRay(ray, hit);
 			
 			THEN("") {
 				REQUIRE(reflection);

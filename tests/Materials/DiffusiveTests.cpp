@@ -13,7 +13,7 @@ SCENARIO("Diffusive material tests", "[Diffusive]") {
 		WHEN("we reflect any ray") {
 			Ray ray;
 			Random::get()->disable();
-			auto reflection = material.processRay(ray, hit);
+			auto reflection = material.reflectRay(ray, hit);
 			Random::get()->enable();
 
 			THEN("the result doesn't depend on the ray") {
@@ -26,7 +26,7 @@ SCENARIO("Diffusive material tests", "[Diffusive]") {
 		WHEN("we reflect any other ray") {
 			Ray ray(hitPoint, Space3D::zAxis);
 			Random::get()->disable();
-			auto reflection = material.processRay(ray, hit);
+			auto reflection = material.reflectRay(ray, hit);
 			Random::get()->enable();
 
 			THEN("we get the same result") {

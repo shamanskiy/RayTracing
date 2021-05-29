@@ -9,9 +9,23 @@ TEST_CASE("Transparent material: test 1", "[Transparent]") {
 	HitRecord hit{ 0.0, hitPoint, hitNormal, &material };
 
 	Ray ray(Vec3(3.0, 0.0, 3.0), Vec3(-3.0, 0.0, -3.0));
-	auto reflection = material.processRay(ray, hit);
+	auto reflection = material.reflectRay(ray, hit);
 
 	REQUIRE(reflection);
-	REQUIRE(reflection->ray == Ray(hitPoint, Vec3(-3.0, 0.0, -3.0)));
+	REQUIRE(reflection->ray == Ray(hitPoint, Vec3(-sqrt(2)/2, 0.0, -sqrt(2) / 2)));
+	REQUIRE(reflection->attenuation == Color::white);
+}
+
+TEST_CASE("Transparent material: test 2", "[Transparent]") {
+	Transparent material(Color::white, sqrt(2));
+	Vec3 hitPoint(0.0, 0.0, 0.0);
+	Vec3 hitNormal(0.0, 0.0, 1.0);
+	HitRecord hit{ 0.0, hitPoint, hitNormal, &material };
+
+	Ray ray(Vec3(3.0, 0.0, 3.0), Vec3(-3.0, 0.0, -3.0));
+	auto reflection = material.reflectRay(ray, hit);
+
+	REQUIRE(reflection);
+	REQUIRE(reflection->ray == Ray(hitPoint, Vec3(-1.0/2, 0.0, -sqrt(3)/2)));
 	REQUIRE(reflection->attenuation == Color::white);
 }

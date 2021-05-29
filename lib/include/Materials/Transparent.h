@@ -10,5 +10,5 @@ class Transparent : public Material
 public:
 	Transparent(const Vec3& color, float refractiveIndex) : m_color(color), m_refractiveIndex(refractiveIndex) {}
 
-	std::optional<MaterialEffect> processRay(const Ray& ray, const HitRecord& hit) const override;
+	std::optional<Reflection> reflectRay(const Ray& ray, const HitRecord& hit) const override;
 };
