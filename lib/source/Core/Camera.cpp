@@ -23,12 +23,14 @@ void Camera::configure()
     float halfWidth = aspectRatio * halfHeight;
 
     Vec3 back = (m_settings.lookFrom - m_settings.lookAt).normalize();
-    Vec3 right = cross(m_settings.globalUp, back).normalize();
-    Vec3 up = cross(back, right);
+    m_right = cross(m_settings.globalUp, back).normalize();
+    m_up = cross(back, m_right);
 
-    m_viewUpperLeftCorner = m_settings.lookFrom - halfWidth * right + halfHeight * up - back;
-    m_viewHorizontalSpan = 2 * halfWidth * right;
-    m_viewVerticalSpan = -2 * halfHeight * up;
+    float focusDistance = (m_settings.lookFrom - m_settings.lookAt).length();
+
+    m_viewUpperLeftCorner = m_settings.lookFrom + (halfHeight * m_up - halfWidth * m_right - back) * focusDistance;
+    m_viewHorizontalSpan = 2 * halfWidth * m_right * focusDistance;
+    m_viewVerticalSpan = -2 * halfHeight * m_up * focusDistance;
 }
 
 Image Camera::render(const Scene& scene) const
@@ -62,6 +64,8 @@ Vec3 Camera::computePixelColor(const Scene& scene, size_t row, size_t column) co
 
 Ray Camera::getRay(float u, float v) const
 {
-    return Ray(m_settings.lookFrom,
-        m_viewUpperLeftCorner + u * m_viewHorizontalSpan + v * m_viewVerticalSpan - m_settings.lookFrom);
+    Vec3 randomLensPoint = m_settings.lensRadius* Random::get()->vecUnitDisk();
+    Vec3 lensOrigin = m_settings.lookFrom + m_right * randomLensPoint.x() + m_up * randomLensPoint.y();
+    return Ray(lensOrigin,
+        m_viewUpperLeftCorner + u * m_viewHorizontalSpan + v * m_viewVerticalSpan - lensOrigin);
 }

@@ -32,6 +32,7 @@ CameraSettings getCameraSettings()
     settings.imagePixelWidth = 1920;
     settings.imagePixelHeight = 1080;
     settings.antialiasing = 20;
+    settings.lensRadius = 0.1;
 
     settings.lookFrom = Vec3(-1.0, 2.0, 1.0);
     settings.lookAt = Vec3(0.0, 0.0, -1.0);

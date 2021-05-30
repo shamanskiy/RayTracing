@@ -20,4 +20,5 @@ public:
     float real01();
     Vec3 vec01();
     Vec3 vecUnitSphere();
+    Vec3 vecUnitDisk();
 };

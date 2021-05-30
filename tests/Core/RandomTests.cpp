@@ -67,3 +67,14 @@ TEST_CASE("Disable random: vector in unit sphere", "[Random]")
 	}
 	Random::get()->enable();
 }
+
+TEST_CASE("Disable random: vector in unit disk", "[Random]")
+{
+    Random::get()->disable();
+    for (int i = 0; i < 10; i++)
+    {
+        Vec3 randomVector = Random::get()->vecUnitDisk();
+        REQUIRE(randomVector == Vec3());
+    }
+    Random::get()->enable();
+}
