@@ -2,6 +2,8 @@
 This project was inspired by the awesome tutorial ["Ray Tracing in One Weekend"](http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html) by Peter Shirley.
 Apart from learning about ray tracing, I've used the project to practice TDD and to try the  [Catch2](https://github.com/catchorg/Catch2) unit testing framework.
 
+<img src="https://raw.githubusercontent.com/Shamanskiy/RayTracing/media/images/positionalbe_camera.png" width="500">
+
 ## Building
 The project uses CMake. To build it, navigate to the project root folder and do the usual:
 ```
