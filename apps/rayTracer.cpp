@@ -14,7 +14,7 @@ Scene makeScene()
 {
     Scene scene;
     scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f, make_unique<Reflective>(Color::gold,0.1f)));
-    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, 1.0), 0.5f, make_unique<Diffusive>(Color::red)));
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, 2.0), 0.5f, make_unique<Diffusive>(Color::red)));
     scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f,make_unique<Diffusive>(Color::mediumGray)));
     scene.addObject(make_unique<Sphere>(Vec3(1.0, 0.0, -1.0), 0.5f, make_unique<Transparent>(Color::white,1.5f)));
     scene.addObject(make_unique<Sphere>(Vec3(1.0, 0.0, -1.0), -0.4f, make_unique<Transparent>(Color::white, 1.5f)));
@@ -28,14 +28,12 @@ Scene makeScene()
 CameraSettings getCameraSettings()
 {
     CameraSettings settings;
-    settings.imagePixelWidth = 1500;
-    settings.imagePixelHeight = 750;
+    settings.imagePixelWidth = 1920;
+    settings.imagePixelHeight = 1080;
     settings.antialiasing = 10;
 
-    settings.cameraPosition = Vec3(0.0, 0.0, 0.0);
-    settings.viewUpperLeftCorner = Vec3(-2.0, 1.0, -1.0);
-    settings.viewHorizontalSpan = Vec3(4.0, 0.0, 0.0);
-    settings.viewVerticalSpan = Vec3(0.0, -2.0, 0.0);
+    settings.cameraPosition = Vec3(0.0, 1.0, 1.0);
+    settings.verticalFOV = 90.0;
 
     settings.maxRayReflections = 10;
 
