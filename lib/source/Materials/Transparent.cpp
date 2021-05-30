@@ -12,26 +12,40 @@ namespace {
 		else
 			return std::nullopt;
 	}
+
+	// Reflection probability approximation by Christophe Schlick
+	// Peter Shirley: Ray Tracing in a Weekend, page 32
+	float schlickLaw(float schlickCos, float refraction)
+	{
+		float probZero = (1 - refraction) * (1 + refraction);
+		probZero *= probZero;
+		return probZero + (1 - probZero) * pow(1 - schlickCos, 5);
+	}
 }
 
 
 std::optional<Reflection> Transparent::reflectRay(const Ray& ray, const HitRecord& hit) const
 {
 	Vec3 directionIn = ray.direction().normalize();
-	bool comesFromOutside = dot(directionIn, hit.normal) < 0;	
+	float cosIn = dot(directionIn, hit.normal);
+	bool comesFromOutside = cosIn < 0;	
+	
 	auto refractedDirection = refract(directionIn, comesFromOutside ? hit.normal : -hit.normal,
 		comesFromOutside ? 1.0f / m_refractiveIndex : m_refractiveIndex);
+	float schlickCosine = cosIn * (comesFromOutside ? -1 : m_refractiveIndex);
 
 	if (refractedDirection)
 	{
-		Ray refractedRay(hit.point, *refractedDirection);
-		return Reflection{ refractedRay, m_color };
+		float reflectionProbability = schlickLaw(schlickCosine, m_refractiveIndex);
+		if (Random::get()->real01() < reflectionProbability)
+		{
+			Ray refractedRay(hit.point, *refractedDirection);
+			return Reflection{ refractedRay, m_color };
+		}
 	}
-	else
-	{
-		Vec3 reflectedDirection = reflect(ray.direction(), hit.normal);
-		Ray reflectedRay(hit.point, reflectedDirection);
-		return Reflection{ reflectedRay, m_color };
-	}
+	
+	Vec3 reflectedDirection = reflect(ray.direction(), hit.normal);
+	Ray reflectedRay(hit.point, reflectedDirection);
+	return Reflection{ reflectedRay, m_color };
 }
 	

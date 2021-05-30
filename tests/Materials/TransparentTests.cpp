@@ -1,6 +1,7 @@
 #include "TestsUtils.h"
 
 #include "Materials/Transparent.h"
+#include "Core/Random.h"
 
 TEST_CASE("Transparent material: ray from outside", "[Transparent]") {
 	Transparent material(Color::white, sqrt(2));
@@ -9,7 +10,9 @@ TEST_CASE("Transparent material: ray from outside", "[Transparent]") {
 	HitRecord hit{ 0.0, hitPoint, hitNormal, &material };
 
 	Ray ray(Vec3(3.0, 0.0, 3.0), Vec3(-3.0, 0.0, -3.0));
+	Random::get()->enable();
 	auto reflection = material.reflectRay(ray, hit);
+	Random::get()->disable();
 
 	REQUIRE(reflection);
 	REQUIRE(reflection->ray == Ray(hitPoint, Vec3(-1.0/2, 0.0, -sqrt(3)/2)));
@@ -23,7 +26,9 @@ TEST_CASE("Transparent material: ray from inside ", "[Transparent]") {
 	HitRecord hit{ 0.0, hitPoint, hitNormal, &material };
 
 	Ray ray(Vec3(1.0 / 2, 0.0, -sqrt(3) / 2), Vec3(-1.0 / 2, 0.0, sqrt(3) / 2));
+	Random::get()->disable();
 	auto reflection = material.reflectRay(ray, hit);
+	Random::get()->enable();
 
 	REQUIRE(reflection);
 	REQUIRE(reflection->ray == Ray(hitPoint, Vec3(-sqrt(2) / 2, 0.0, sqrt(2) / 2)));
