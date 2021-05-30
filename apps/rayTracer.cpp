@@ -20,6 +20,7 @@ Scene makeScene()
     scene.addObject(make_unique<Sphere>(Vec3(1.0, 0.0, -1.0), -0.4f, make_unique<Transparent>(Color::white, 1.5f)));
     scene.addObject(make_unique<Sphere>(Vec3(-1.0, 0.0, -1.0), 0.5f, make_unique<Reflective>(Color::lightGray,0.1f)));
     scene.addObject(make_unique<Sphere>(Vec3(2.0, 0.0, -2.0), 0.5f, make_unique<Diffusive>(Color::red)));
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, 1.0, -3.0), 1.5f, make_unique<Reflective>(Color::lightGray, 0.05f)));
 
     scene.setSkyGradient(Color::white, Color::lightblue);
     return scene;
@@ -30,9 +31,9 @@ CameraSettings getCameraSettings()
     CameraSettings settings;
     settings.imagePixelWidth = 1920;
     settings.imagePixelHeight = 1080;
-    settings.antialiasing = 100;
+    settings.antialiasing = 20;
 
-    settings.lookFrom = Vec3(-2.0, 4.0, 2.0);
+    settings.lookFrom = Vec3(-1.0, 2.0, 1.0);
     settings.lookAt = Vec3(0.0, 0.0, -1.0);
     settings.verticalFOV = 90.0;
 
