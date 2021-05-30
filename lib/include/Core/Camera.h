@@ -12,7 +12,9 @@ struct CameraSettings {
     size_t imagePixelHeight{ 200 };
     int antialiasing{ 100 };
 
-    Vec3 cameraPosition{ 0.0, 0.0, 0.0 };
+    Vec3 lookFrom{ 0.0, 0.0, 0.0 };
+    Vec3 lookAt{ 0.0,0.0,-1.0 };
+    Vec3 globalUp{ 0.0, 1.0, 0.0 };
 
     int maxRayReflections{ 1 };
 

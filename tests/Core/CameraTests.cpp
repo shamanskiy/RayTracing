@@ -9,7 +9,8 @@ SCENARIO("Camera positioning tests", "[Camera]") {
         settings.imagePixelHeight = 100;
         settings.imagePixelWidth = 200;
         settings.verticalFOV = 90;
-        settings.cameraPosition = Space3D::origin;
+        settings.lookFrom = Space3D::origin;
+        settings.lookAt = Vec3(1.0, 0.0, 0.0);
         Camera camera(settings);
     
         WHEN("") {
@@ -17,7 +18,25 @@ SCENARIO("Camera positioning tests", "[Camera]") {
             
             THEN("") {
                 REQUIRE(ray.origin() == Space3D::origin);
-                REQUIRE(ray.direction() == Vec3(-2.0, 1.0, -1.0));
+                REQUIRE(ray.direction() == Vec3(1.0, 1.0, -2.0));
+            }
+        }
+
+        WHEN("") {
+            Ray ray = camera.getRay(1.0, 1.0);
+
+            THEN("") {
+                REQUIRE(ray.origin() == Space3D::origin);
+                REQUIRE(ray.direction() == Vec3(1.0, -1.0, 2.0));
+            }
+        }
+
+        WHEN("") {
+            Ray ray = camera.getRay(0.5, 0.5);
+
+            THEN("") {
+                REQUIRE(ray.origin() == Space3D::origin);
+                REQUIRE(ray.direction() == Vec3(1.0, 0.0, 0.0));
             }
         }
     }

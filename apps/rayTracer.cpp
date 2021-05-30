@@ -14,7 +14,7 @@ Scene makeScene()
 {
     Scene scene;
     scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, -1.0), 0.5f, make_unique<Reflective>(Color::gold,0.1f)));
-    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, 2.0), 0.5f, make_unique<Diffusive>(Color::red)));
+    scene.addObject(make_unique<Sphere>(Vec3(0.0, 0.0, 0.0), 0.5f, make_unique<Diffusive>(Color::red)));
     scene.addObject(make_unique<Sphere>(Vec3(0.0, -100.5, -1.0), 100.0f,make_unique<Diffusive>(Color::mediumGray)));
     scene.addObject(make_unique<Sphere>(Vec3(1.0, 0.0, -1.0), 0.5f, make_unique<Transparent>(Color::white,1.5f)));
     scene.addObject(make_unique<Sphere>(Vec3(1.0, 0.0, -1.0), -0.4f, make_unique<Transparent>(Color::white, 1.5f)));
@@ -30,12 +30,13 @@ CameraSettings getCameraSettings()
     CameraSettings settings;
     settings.imagePixelWidth = 1920;
     settings.imagePixelHeight = 1080;
-    settings.antialiasing = 10;
+    settings.antialiasing = 100;
 
-    settings.cameraPosition = Vec3(0.0, 1.0, 1.0);
+    settings.lookFrom = Vec3(-2.0, 4.0, 2.0);
+    settings.lookAt = Vec3(0.0, 0.0, -1.0);
     settings.verticalFOV = 90.0;
 
-    settings.maxRayReflections = 10;
+    settings.maxRayReflections = 30;
 
     settings.verbosity = Verbosity::all;
     return settings;
@@ -57,7 +58,7 @@ void saveImage(const Image& image)
     cout << "Saving...\n";
     Timer timer;
 
-    string outputFileName("transparent_material.ppm");
+    string outputFileName("positionalbe_camera.ppm");
     image.save(outputFileName, Verbosity::all);
 
     cout << timer.reportElapsedTime() << "\n";
