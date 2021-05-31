@@ -19,6 +19,7 @@ struct CameraSettings {
     int maxRayReflections{ 1 };
 
     Verbosity verbosity{ Verbosity::none };
+    float lensRadius{0.0};
 };
 
 class Camera {
@@ -26,9 +27,11 @@ class Camera {
     Vec3 m_viewUpperLeftCorner;
     Vec3 m_viewHorizontalSpan;
     Vec3 m_viewVerticalSpan;
+    Vec3 m_right;
+    Vec3 m_up;
 
 public:
-    Camera(const CameraSettings& settings);
+    explicit Camera(const CameraSettings& settings);
 
     Image render(const Scene& scene) const;
     Ray getRay(float uParam, float vParam) const;

@@ -22,7 +22,7 @@ float Random::real01() {
 
 Vec3 Random::vec01() {
     if (m_enabled)
-        return Vec3(Random::real01(), Random::real01(), Random::real01());
+        return Vec3(real01(), real01(), real01());
     else
         return Vec3();
 }
@@ -34,7 +34,20 @@ Vec3 Random::vecUnitSphere() {
     // rejection algorithm
     Vec3 point;
     do {
-        point = 2.0 * Random::vec01() - Vec3(1.0, 1.0, 1.0);
+        point = 2.0 * vec01() - Vec3(1.0, 1.0, 1.0);
     } while (point.length_sq() >= 1.0);
+    return point;
+}
+
+Vec3 Random::vecUnitDisk() {
+    if (!m_enabled)
+        return Vec3();
+
+    // 2D rejection algorithm
+    Vec3 point;
+    do {
+        point = 2.0 * Vec3(real01(),real01(),0.0) - Vec3(1.0,1.0,0.0);
+    } while (point.length_sq() >= 1.0);
+
     return point;
 }
